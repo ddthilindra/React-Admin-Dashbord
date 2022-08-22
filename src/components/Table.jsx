@@ -10,19 +10,19 @@ import Paper from "@mui/material/Paper";
 import { useHistory } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
 
-const Admintoken = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjMsImFkbWluX25hbWUiOiJEaWxzaGFuIiwiZW1haWxfYWRkcmVzcyI6ImFkbWluQGdtYWlsLmNvbSIsIm1vYmlsZV9udW1iZXIiOiIwNzc4OTg5NTk4Iiwic3RhdHVzIjoiQURNSU4ifSwiaWF0IjoxNjU0OTI5NDc2NjY2LCJleHAiOjE2NTQ5MzA2ODYyNjZ9.BuXsouVvXMBhiy0paDBlrmxcnlwC3ypBJoOCQYH9UNc`;
+//const Admintoken = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjMsImFkbWluX25hbWUiOiJEaWxzaGFuIiwiZW1haWxfYWRkcmVzcyI6ImFkbWluQGdtYWlsLmNvbSIsIm1vYmlsZV9udW1iZXIiOiIwNzc4OTg5NTk4Iiwic3RhdHVzIjoiQURNSU4ifSwiaWF0IjoxNjU0OTI5NDc2NjY2LCJleHAiOjE2NTQ5MzA2ODYyNjZ9.BuXsouVvXMBhiy0paDBlrmxcnlwC3ypBJoOCQYH9UNc`;
 
 const Employee = (props) => {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    const config = {
-      headers: { Authorization: Admintoken },
-    };
+    // const config = {
+    //   headers: { Authorization: Admintoken },
+    // };
     axios
       .get(
-        "http://ec2-54-241-126-210.us-west-1.compute.amazonaws.com:8080/admin/getAllAdmin",
-        config
+        "http://localhost:8000/leave/getAllLeaveHrs/1",
+        
       )
       .then((res) => {
         console.log("Getting from:", res.data.data);
@@ -60,40 +60,39 @@ const Employee = (props) => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell className="tableCell">Admin Id</TableCell>
-                <TableCell className="tableCell">Admin name</TableCell>
-                <TableCell className="tableCell">Email</TableCell>
-                <TableCell className="tableCell">Contact No</TableCell>
+                <TableCell className="tableCell">Emp Id</TableCell>
+                <TableCell className="tableCell">Emp Name</TableCell>
+                <TableCell className="tableCell">Role</TableCell>
+                <TableCell className="tableCell">Week of Month</TableCell>
+                <TableCell className="tableCell">Worked Hours</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {props.status === "" &&
                 rows
-                  .filter((q) => q.admin_name.toLowerCase().includes(""))
+                  .filter((q) => q.week.toLowerCase().includes(""))
                   .map((row) => (
                     <TableRow
                       hover
-                      key={row.id}
+                      key={row.Id}
                       onClick={() => {
-                        history.push(`/admin/` + row.id);
+                        history.push(`/admin/` + row.Id);
                       }}
                     >
-                      <TableCell className="tableCell">
-                        <span>{row.id}</span>
+                      <TableCell className="tableCell" >
+                        <span>{row.Id}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <a className="table-profile-link">
-                          <div className="cellWrapper">
-                            {/* <img src={row.image} alt="" className="image" /> */}
-                            <span>{row.admin_name}</span>
-                          </div>
-                        </a>
+                        <span>{row.firstName} {row.lastName}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.email_address}</span>
+                      <span className={`status ${row.user_type}`}>{row.user_type}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.mobile_number}</span>
+                        <span>{row.week}</span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span>{row.totalhours.slice(0, -3)} / 8 Hrs</span>
                       </TableCell>
                       {/* <TableCell className="tableCell">
                     <Button
@@ -108,58 +107,80 @@ const Employee = (props) => {
                   ))}
               {props.status === "All" &&
                 rows
-                  .filter((q) => q.admin_name.toLowerCase().includes(""))
+                  .filter((q) => q.firstName.toLowerCase().includes(""))
                   .map((row) => (
-                    <TableRow key={row.id}>
+                    <TableRow
+                      hover
+                      key={row.Id}
+                      onClick={() => {
+                        history.push(`/admin/` + row.Id);
+                      }}
+                    >
                       <TableCell className="tableCell">
-                        <span>{row.id}</span>
+                        <span>{row.Id}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <a className="table-profile-link">
-                          <div className="cellWrapper">
-                            {/* <img src={row.image} alt="" className="image" /> */}
-                            <span>{row.admin_name}</span>
-                          </div>
-                        </a>
+                        <span>{row.firstName} {row.lastName}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.email_address}</span>
+                      <span className={`status ${row.user_type}`}>{row.user_type}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.mobile_number}</span>
+                        <span>{row.week}</span>
                       </TableCell>
-
-                      <TableCell className="tableCell"></TableCell>
+                      <TableCell className="tableCell">
+                        <span>{row.totalhours.slice(0, -3)} / 8 Hrs</span>
+                      </TableCell>
+                      {/* <TableCell className="tableCell">
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => openInPopup(row)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell> */}
                     </TableRow>
                   ))}
               {rows
                 .filter(
                   (n) =>
-                    n.status === props.status &&
-                    n.admin_name.toLowerCase().includes("")
+                    n.user_type === props.status &&
+                    n.firstName.toLowerCase().includes("")
                 )
                 .map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell className="tableCell">
-                      <span>{row.id}</span>
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <a className="table-profile-link">
-                        <div className="cellWrapper">
-                          {/* <img src={row.image} alt="" className="image" /> */}
-                          <span>{row.admin_name}</span>
-                        </div>
-                      </a>
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <span>{row.email_address}</span>
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <span>{row.mobile_number}</span>
-                    </TableCell>
-
-                    <TableCell className="tableCell"></TableCell>
-                  </TableRow>
+                  <TableRow
+                      hover
+                      key={row.Id}
+                      onClick={() => {
+                        history.push(`/admin/` + row.Id);
+                      }}
+                    >
+                      <TableCell className="tableCell" >
+                        <span>{row.Id}</span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span>{row.firstName} {row.lastName}</span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                      <span className={`status ${row.user_type}`}>{row.user_type}</span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span>{row.week}</span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span>{row.totalhours.slice(0, -3)} / 8 Hrs</span>
+                      </TableCell>
+                      {/* <TableCell className="tableCell">
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => openInPopup(row)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell> */}
+                    </TableRow>
                 ))}
             </TableBody>
           </Table>

@@ -13,9 +13,9 @@ function App() {
       <Router>
       <Sidebar/>
         <Switch>
-          <Route path="/" exact component={Dashboard} />
+          <Route path="/asd" exact component={Dashboard} />
           <Route path="/employe" component={Employee} />
-          <Route path="/leave" component={LeaveSummery} />
+          <Route path="/" component={LeaveSummery} />
         </Switch>
       </Router>
     </Div>

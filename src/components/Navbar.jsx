@@ -7,7 +7,7 @@ export default function Navbar() {
       <div className="title">
         {/* <h4>Hi Kishan,</h4> */}
         <h1>
-          Welcome to <span>MY TAXI DASHBOARD</span>
+          Welcome to <span>Hasthiya IT</span>
         </h1>
       </div>
       {/* <div className="search">

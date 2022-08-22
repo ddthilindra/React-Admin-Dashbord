@@ -24,8 +24,8 @@ export default function Sidebar() {
       <Section>
         <div className="top">
           <div className="brand">
-            <FaTaxi />
-            <span>MY TAXI</span>
+            {/* <FaTaxi /> */}
+            <h1>Hasthiya IT</h1>
           </div>
           <div className="toggle">
             {navbarState ? (
@@ -199,8 +199,8 @@ const Section = styled.section`
         color: #2065d1;//logo
         font-size: 2rem;
       }
-      span {
-        font-size: 2rem;
+      h1 {
+        font-size: 1.75rem;
         color: #2065d1;
         font-family: "Montserrat", sans-serif;
       }

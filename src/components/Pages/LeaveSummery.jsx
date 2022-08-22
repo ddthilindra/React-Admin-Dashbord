@@ -112,9 +112,9 @@ export default class LeaveSummery extends Component {
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-
-        const strTime = date.format(added.startDate, "YYYY-MM-DD hh-mm-ss");
-        const endTime = date.format(added.endDate, "YYYY-MM-DD hh-mm-ss");
+        
+        const strTime = date.format(added.startDate, "YYYY-MM-DD HH-mm-ss");
+        const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
 
         if (added.title && added.startDate && added.endDate) {
           const data = {

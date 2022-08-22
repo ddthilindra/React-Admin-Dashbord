@@ -53,16 +53,15 @@ const Employee = () => {
           }}
         >
           <FormControl style={{ minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <InputLabel id="demo-simple-select-label">Role</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              label="Age"
+              label="Role"
               onChange={(e) => setCategory(e.target.value)}
             >
               <MenuItem value={"All"}>All</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={"developer"}>Developer</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -71,7 +70,7 @@ const Employee = () => {
 
         <div className="grid">
           <div className="listContainer">
-            <div className="listTitle">Latest Transactions</div>
+            {/* <div className="listTitle">Latest Transactions</div> */}
 
             <Table status={category} />
           </div>
