@@ -63,7 +63,7 @@ const Employee = (props) => {
                 <TableCell className="tableCell">Emp Id</TableCell>
                 <TableCell className="tableCell">Emp Name</TableCell>
                 <TableCell className="tableCell">Role</TableCell>
-                <TableCell className="tableCell">Week of Month</TableCell>
+                <TableCell className="tableCell">This Week of Month</TableCell>
                 <TableCell className="tableCell">Worked Hours</TableCell>
               </TableRow>
             </TableHead>
@@ -76,7 +76,7 @@ const Employee = (props) => {
                       hover
                       key={row.Id}
                       onClick={() => {
-                        history.push(`/admin/` + row.Id);
+                        history.push(`/emp/` + row.Id);
                       }}
                     >
                       <TableCell className="tableCell" >
@@ -113,7 +113,7 @@ const Employee = (props) => {
                       hover
                       key={row.Id}
                       onClick={() => {
-                        history.push(`/admin/` + row.Id);
+                        history.push(`/employee/` + row.Id);
                       }}
                     >
                       <TableCell className="tableCell">
@@ -153,7 +153,7 @@ const Employee = (props) => {
                       hover
                       key={row.Id}
                       onClick={() => {
-                        history.push(`/admin/` + row.Id);
+                        history.push(`/employee/` + row.Id);
                       }}
                     >
                       <TableCell className="tableCell" >

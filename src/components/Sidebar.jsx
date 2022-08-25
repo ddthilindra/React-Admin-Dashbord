@@ -63,7 +63,7 @@ export default function Sidebar() {
                 className={currentLink === 3 ? "active" : "none"}
                 onClick={() => setCurrentLink(3)}
               >
-                <Link to="/employe">
+                <Link to="/employee">
                   <FaAddressCard />
                   <span> Employee</span>
                 </Link>
@@ -112,7 +112,7 @@ export default function Sidebar() {
               className={currentLink === 1 ? "active" : "none"}
               onClick={() => setCurrentLink(1)}
             >
-              <Link to="#">
+              <Link to="/">
                 <MdSpaceDashboard />
                 <span> Dashboard</span>
               </Link>
@@ -130,9 +130,9 @@ export default function Sidebar() {
               className={currentLink === 3 ? "active" : "none"}
               onClick={() => setCurrentLink(3)}
             >
-              <Link to="#">
+              <Link to="/employee">
                 <FaAddressCard />
-                <span> Payment Details</span>
+                <span> Employee</span>
               </Link>
             </li>
             <li
@@ -265,7 +265,7 @@ const Section = styled.section`
       padding: 0 1rem;
       .toggle {
         display: block;
-        color: white;
+        color: #2065d1;
         z-index: 99;
         svg {
           font-size: 1.4rem;
@@ -288,7 +288,7 @@ const ResponsiveNav = styled.div`
   right: -10vw;
   top: 0;
   z-index: 10;
-  background-color: black;
+  background-color: #f3f2ef;
   height: 100vh;
   width: ${({ state }) => (state ? "60%" : "0%")};
   transition: 0.4s ease-in-out;
@@ -304,25 +304,25 @@ const ResponsiveNav = styled.div`
       gap: 1rem;
       margin-top: 3rem;
       li {
-        padding: 0.6rem 1rem;
+        padding: 0.6rem 6rem 0.6rem 0.6rem;
         border-radius: 0.6rem;
         &:hover {
-          background-color: #ffc107;
+          background-color: #2065d1;
           a {
-            color: black;
+            color: white;
           }
         }
         a {
           text-decoration: none;
           display: flex;
           gap: 1rem;
-          color: white;
+          color: #2065d1;
         }
       }
       .active {
-        background-color: #ffc107;
+        background-color: #2065d1;
         a {
-          color: black;
+          color: white;
         }
       }
     }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Navbar from "../Navbar";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import scrollreveal from "scrollreveal";
-import Table from "../Table";
+import Table from "../EmpTable";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -15,7 +15,7 @@ const Employee = () => {
 
   useEffect(() => {
     const sr = scrollreveal({
-      origin: "bottom",
+      origin: "left",
       distance: "80px",
       duration: 2000,
       reset: false,
@@ -35,7 +35,7 @@ const Employee = () => {
   return (
     <>
       <Section>
-        <Navbar />
+        <Navbar text={"Employee"}/>
         {/* <section className="k-my-8">
           <form className="k-form k-mb-4">
             <label className="k-label k-mb-3">Filter By Status:</label>
@@ -62,6 +62,7 @@ const Employee = () => {
             >
               <MenuItem value={"All"}>All</MenuItem>
               <MenuItem value={"developer"}>Developer</MenuItem>
+              <MenuItem value={"QA"}>QA</MenuItem>
             </Select>
           </FormControl>
         </div>

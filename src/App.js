@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import LeaveSummery from "./components/Pages/LeaveSummery";
 import Example from "./components/Pages/example";
+import SingleEmp from "./components/Pages/SingleEmp";
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
       <Router>
       <Sidebar/>
         <Switch>
-          <Route path="/asd" exact component={Dashboard} />
-          <Route path="/employe" component={Employee} />
-          <Route path="/" component={LeaveSummery} />
+          <Route path="/" exact component={Dashboard} />
+          <Route path="/employee" component={Employee} />          
+          <Route path="/emp/:id"  exact component={SingleEmp} />
+          <Route path="/leave" component={LeaveSummery} />
         </Switch>
       </Router>
     </Div>

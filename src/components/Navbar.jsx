@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { BiSearch } from "react-icons/bi";
-export default function Navbar() {
+export default function Navbar(props) {
   return (
     <Nav>
       <div className="title">
         {/* <h4>Hi Kishan,</h4> */}
+        <p>/{props.text}</p>
         <h1>
-          Welcome to <span>Hasthiya IT</span>
+          <span>{props.text}</span>
         </h1>
       </div>
       {/* <div className="search">
@@ -30,6 +31,10 @@ const Nav = styled.nav`
         font-family: "Montserrat", sans-serif;
         letter-spacing: 0.2rem;
       }
+    }
+    p {
+      margin: 0 0 0.6rem 0.5rem;
+      font-size: 0.7rem;
     }
   }
   .search {
