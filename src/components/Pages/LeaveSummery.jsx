@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
-import date from 'date-and-time';
+import date from "date-and-time";
 import {
   ViewState,
   EditingState,
@@ -23,7 +23,32 @@ import {
 } from "@devexpress/dx-react-scheduler-material-ui";
 import styled from "styled-components";
 import Navbar from "../Navbar";
+import { Button, makeStyles } from "@material-ui/core";
 //import { appointments } from "./appointments";
+
+const Layout = ({ appointmentMeta, visible, onHide, ...restProps }) => {
+  return (
+    <>
+      <AppointmentForm.Label
+        text="Precio Modulo"
+        style={{ backgroundColor: "#b0cbea" }}
+      />
+      <AppointmentForm.TextEditor type="numberEditor" placeholder="Precio" />
+      <AppointmentForm.TextEditor
+        readOnly
+        type="numberEditor"
+        placeholder="Precio"
+      />
+      <AppointmentForm.Select />
+      <AppointmentForm.DateEditor
+        onValueChange={(e) => console.log(e.target.value)}
+      />
+
+      <h1>asdasd</h1>
+      <Button>asdas</Button>
+    </>
+  );
+};
 
 export default class LeaveSummery extends Component {
   constructor(props) {
@@ -112,7 +137,7 @@ export default class LeaveSummery extends Component {
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-        
+
         const strTime = date.format(added.startDate, "YYYY-MM-DD HH-mm-ss");
         const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
 
@@ -271,7 +296,7 @@ export default class LeaveSummery extends Component {
 
     return (
       <Section>
-      <Navbar />
+        <Navbar text={"Calender"}/>
         <Paper>
           <Scheduler data={data} height={930}>
             <ViewState
@@ -298,7 +323,10 @@ export default class LeaveSummery extends Component {
             <ConfirmationDialog />
             <Appointments />
             <AppointmentTooltip showOpenButton showDeleteButton />
-            <AppointmentForm />
+            
+            {/* <AppointmentForm layoutComponent={Layout} /> */}
+
+            <AppointmentForm  />
           </Scheduler>
         </Paper>
       </Section>

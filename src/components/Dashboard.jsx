@@ -33,7 +33,7 @@ export default function Dashboard() {
   return (
   <>
     <Section>
-      <Navbar />
+    <Navbar text={"HR System"}/>
       <div className="grid">
         <div className="row__one">
           <Analytics />

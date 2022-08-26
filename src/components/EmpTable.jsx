@@ -21,7 +21,7 @@ const Employee = (props) => {
     // };
     axios
       .get(
-        "http://localhost:8000/leave/getAllLeaveHrs/1",
+        "http://localhost:8000/leave/getAllLeaveHrs",
         
       )
       .then((res) => {
@@ -63,7 +63,7 @@ const Employee = (props) => {
                 <TableCell className="tableCell">Emp Id</TableCell>
                 <TableCell className="tableCell">Emp Name</TableCell>
                 <TableCell className="tableCell">Role</TableCell>
-                <TableCell className="tableCell">This Week of Month</TableCell>
+                <TableCell className="tableCell">Current Week </TableCell>
                 <TableCell className="tableCell">Worked Hours</TableCell>
               </TableRow>
             </TableHead>
@@ -92,7 +92,7 @@ const Employee = (props) => {
                         <span>{row.week}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.totalhours.slice(0, -3)} / 8 Hrs</span>
+                        <span>{row.totalhours.slice(0, -3)} / 56 Hrs</span>
                       </TableCell>
                       {/* <TableCell className="tableCell">
                     <Button

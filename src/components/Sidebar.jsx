@@ -74,7 +74,7 @@ export default function Sidebar() {
               >
                 <Link to="leave">
                   <GiTwirlCenter />
-                  <span> Learning Center</span>
+                  <span> Calender</span>
                 </Link>
               </li>
               <li
