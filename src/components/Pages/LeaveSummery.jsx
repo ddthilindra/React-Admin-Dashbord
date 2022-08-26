@@ -26,31 +26,40 @@ import Navbar from "../Navbar";
 import { Button, makeStyles } from "@material-ui/core";
 //import { appointments } from "./appointments";
 
-const Layout = ({ appointmentMeta, visible, onHide, ...restProps }) => {
-  return (
-    <>
-      <AppointmentForm.Label
-        text="Precio Modulo"
-        style={{ backgroundColor: "#b0cbea" }}
-      />
-      <AppointmentForm.TextEditor type="numberEditor" placeholder="Precio" />
-      <AppointmentForm.TextEditor
-        readOnly
-        type="numberEditor"
-        placeholder="Precio"
-      />
-      <AppointmentForm.Select />
-      <AppointmentForm.DateEditor
-        onValueChange={(e) => console.log(e.target.value)}
-      />
-
-      <h1>asdasd</h1>
-      <Button>asdas</Button>
-    </>
-  );
-};
 
 export default class LeaveSummery extends Component {
+
+   Layout = ({ appointmentMeta, visible, onHide, ...restProps }) => {
+    return (
+      <>
+       <select>
+                <option>asdasd</option>
+                <option>asdasd</option>
+                <option>asdasd</option>
+              </select>
+        <AppointmentForm.Label
+          text="Precio Modulo"
+          style={{ backgroundColor: "#b0cbea" }}
+        />
+        <AppointmentForm.TextEditor type="numberEditor" placeholder="Precio" />
+        <AppointmentForm.TextEditor
+          readOnly
+          type="numberEditor"
+          placeholder="Precio"
+        />
+        <AppointmentForm.Select />
+        <AppointmentForm.DateEditor
+          onValueChange={(e) => console.log(e.target.value)}
+        />
+  
+        <h1>asdasd</h1>
+        {/* <Button onClick={this.commitChanges}>asdas</Button> */}
+        <AppointmentForm.CommandButton />
+      </>
+    );
+  };
+
+  
   constructor(props) {
     super(props);
 
@@ -129,11 +138,13 @@ export default class LeaveSummery extends Component {
   }
 
   commitChanges({ added, changed, deleted }) {
+    
     this.setState((state) => {
       //const date = require("date-and-time");
       let { data } = state;
 
       if (added) {
+        console.log("added")
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
@@ -324,9 +335,14 @@ export default class LeaveSummery extends Component {
             <Appointments />
             <AppointmentTooltip showOpenButton showDeleteButton />
             
-            {/* <AppointmentForm layoutComponent={Layout} /> */}
+            <AppointmentForm layoutComponent={this.Layout} />
 
-            <AppointmentForm  />
+            {/* <AppointmentForm  /> */}
+            {/* <select>
+              <option>asdasd</option>
+              <option>asdasd</option>
+              <option>asdasd</option>
+            </select> */}
           </Scheduler>
         </Paper>
       </Section>
