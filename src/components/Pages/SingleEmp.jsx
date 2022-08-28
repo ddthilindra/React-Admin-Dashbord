@@ -24,6 +24,31 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import {
+  ViewState,
+  EditingState,
+  IntegratedEditing,
+  GroupingState,
+  IntegratedGrouping,
+} from "@devexpress/dx-react-scheduler";
+import {
+  Scheduler,
+  WeekView,
+  Resources,
+  Toolbar,
+  DateNavigator,
+  Appointments,
+  DragDropProvider,
+  GroupingPanel,
+  TodayButton,
+  ViewSwitcher,
+  MonthView,
+  DayView,
+  AppointmentForm,
+  AppointmentTooltip,
+  ConfirmationDialog,
+} from "@devexpress/dx-react-scheduler-material-ui";
+
 const SingleEmp = () => {
   const { id } = useParams();
   console.log("id is:", id);
@@ -49,6 +74,22 @@ const SingleEmp = () => {
         setRows(JSON.parse(JSON.stringify(res.data.data)));
       })
       .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:8000/leave/getAllLeaves/1")
+      .then((res) => {
+        if (
+          res.data.code == 200 &&
+          res.data.success == true &&
+          res.data.data.length > 0
+        ) {
+          console.log(res.data);
+          setdata(JSON.parse(JSON.stringify(res.data.data)));
+        } else {
+          console.log("bad request...");
+        }
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -63,110 +104,153 @@ const SingleEmp = () => {
     setPage(newPage);
   };
 
+  const [data, setdata] = useState();
+  const componentDidMount = () => {};
+  // const { data, currentDate, resources, grouping, groupByDate, isGroupByDate, } = this.state;
   return (
     <>
       <Section>
         <Navbar text={"Emp"} />
-
-        <Card
-          sx={{
-            display: "flex",
-            maxWidth: 10000,
-            padding: "14px",
-            marginBottom: "24px",
-            marginTop: "24px",
-          }}
-        >
-          <CardMedia
+        <div >
+          <Card
             sx={{
-              height: 160,
-              width: 160,
-              borderRadius: "16px",
-              padding: "1%",
-              marginRight:"5%"
+              display: "flex",
+              maxWidth: 10000,
+              padding: "14px",
+              marginBottom: "24px",
+              marginTop: "24px",
             }}
-            component="img"
-            image={image}
-            alt="green iguana"
-          />
+          >
+            <CardMedia
+              sx={{
+                height: 160,
+                width: 160,
+                borderRadius: "16px",
+                padding: "1%",
+                marginRight: "5%",
+              }}
+              component="img"
+              image={image}
+              alt="green iguana"
+            />
 
-          <CardContent >
-            <Typography gutterBottom variant="h5" component="div">
-              {userData.firstName} {userData.lastName}
-            </Typography>
-            <Typography gutterBottom variant="h7" component="div">
-              Role : {userData.user_type}
-            </Typography>
-            <Typography gutterBottom variant="h7" component="div">
-              Email : {userData.email}
-            </Typography>
-            <Typography gutterBottom variant="h7" component="div">
-              Phone Number : {userData.contactNo}
-            </Typography>
-            <Typography gutterBottom variant="h7" component="div">
-              City : {userData.city}
-            </Typography>
-            {/* <Typography variant="body2" color="text.secondary">
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {userData.firstName} {userData.lastName}
+              </Typography>
+              <Typography gutterBottom variant="h7" component="div">
+                Role : {userData.user_type}
+              </Typography>
+              <Typography gutterBottom variant="h7" component="div">
+                Email : {userData.email}
+              </Typography>
+              <Typography gutterBottom variant="h7" component="div">
+                Phone Number : {userData.contactNo}
+              </Typography>
+              <Typography gutterBottom variant="h7" component="div">
+                City : {userData.city}
+              </Typography>
+              {/* <Typography variant="body2" color="text.secondary">
               Lizards are a widespread group of squamate reptiles, with over
               6,000 species, ranging across all continents except Antarctica
             </Typography> */}
-          </CardContent>
-          <CardActions>
-            {/* <Button size="small">Share</Button> */}
-            {/* <Button size="small">Learn More</Button> */}
-          </CardActions>
-        </Card>
+            </CardContent>
+            <CardActions>
+              {/* <Button size="small">Share</Button> */}
+              {/* <Button size="small">Learn More</Button> */}
+            </CardActions>
+          </Card>
 
-        <TableContainer component={Paper} className="table">
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead style={{ backgroundColor: "#b0cbea" }}>
-              <TableRow>
-                <TableCell className="tableCell">Record Id</TableCell>
-                <TableCell className="tableCell">Emp Name</TableCell>
-                <TableCell className="tableCell">Role</TableCell>
-                <TableCell className="tableCell">This Week of Month</TableCell>
-                <TableCell className="tableCell">Worked Hours</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .filter((q) => q.firstName.toLowerCase().includes(""))
-                .map((row) => (
-                  <TableRow hover key={row.Id}>
-                    <TableCell className="tableCell">
-                      <span>{row.Id}</span>
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <span>
-                        {row.firstName} {row.lastName}
-                      </span>
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <span className={`status ${row.user_type}`}>
-                        {row.user_type}
-                      </span>
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <span>{row.week}</span>
-                    </TableCell>
-                    <TableCell className="tableCell">
-                      <span>{row.totalhours.slice(0, -3)} / 56 Hrs</span>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+          <TableContainer component={Paper} sx={{ marginBottom: "2%" }}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead style={{ backgroundColor: "#b0cbea" }}>
+                <TableRow>
+                  <TableCell className="tableCell">Record Id</TableCell>
+                  <TableCell className="tableCell">Emp Name</TableCell>
+                  <TableCell className="tableCell">Role</TableCell>
+                  <TableCell className="tableCell">
+                    This Week of Month
+                  </TableCell>
+                  <TableCell className="tableCell">Worked Hours</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .filter((q) => q.firstName.toLowerCase().includes(""))
+                  .map((row) => (
+                    <TableRow hover key={row.Id}>
+                      <TableCell className="tableCell">
+                        <span>{row.Id}</span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span>
+                          {row.firstName} {row.lastName}
+                        </span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span className={`status ${row.user_type}`}>
+                          {row.user_type}
+                        </span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span>{row.week}</span>
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        <span>{row.totalhours.slice(0, -3)} / 56 Hrs</span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </TableContainer>
+
+          <Paper>
+            <Scheduler
+              data={data}
+              height={930}
+              // onAppointmentFormOpening={this.onAppointmentFormOpening}
+            >
+              <ViewState
+              // currentDate={currentDate}
+              // onCurrentDateChange={this.currentDateChange}
+              />
+              <EditingState />
+
+              <IntegratedEditing />
+
+              <WeekView startDayHour={0} endDayHour={24} />
+              <WeekView
+                name="work-week"
+                displayName="Work Week"
+                excludedDays={[0, 6]}
+                startDayHour={9}
+                endDayHour={19}
+              />
+              <MonthView />
+
+              <DayView startDayHour={9} endDayHour={19} />
+              <Toolbar />
+              <DateNavigator />
+              <ViewSwitcher />
+              <TodayButton />
+              <ConfirmationDialog />
+              <Appointments />
+              <AppointmentTooltip showOpenButton showDeleteButton />
+
+              {/* <AppointmentForm /> */}
+            </Scheduler>
+          </Paper>
+        </div>
       </Section>
     </>
   );
@@ -183,7 +267,13 @@ const Section = styled.section`
     padding: 0px;
     margin: 0px;
   }
-
+  .empContainer {
+    border-radius: 5px;
+    border: 2px solid #d1e9fc;
+    padding: 5px;
+    width: 100%;
+    height: 550px;
+  }
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     margin-left: 0;
     .container {
