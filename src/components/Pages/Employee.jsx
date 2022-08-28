@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Navbar from "../Navbar";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import scrollreveal from "scrollreveal";
-import Table from "../EmpTable";
+import Table from "../EmpWeekSumTable";
+import EmpTable from "../EmpTable";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -148,7 +149,31 @@ const Employee = () => {
             </div>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          All Employees >>>
+          <div style={{}}>
+              <FormControl style={{ minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Role"
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <MenuItem value={"All"}>All</MenuItem>
+                  <MenuItem value={"developer"}>Developer</MenuItem>
+                  <MenuItem value={"QA"}>QA</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+
+            {/* <p>{category}</p> */}
+
+            <div className="grid">
+              <div className="listContainer">
+                {/* <div className="listTitle">Latest Transactions</div> */}
+
+                <EmpTable status={category} />
+              </div>
+            </div>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Item Three

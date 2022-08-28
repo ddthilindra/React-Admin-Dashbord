@@ -9,6 +9,7 @@ import { IoSettings } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
+import { AiFillCalendar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -16,8 +17,6 @@ export default function Sidebar() {
   const [navbarState, setNavbarState] = useState(false);
   const html = document.querySelector("html");
   html.addEventListener("click", () => setNavbarState(false));
-
-
 
   return (
     <>
@@ -54,46 +53,46 @@ export default function Sidebar() {
                 className={currentLink === 2 ? "active" : "none"}
                 onClick={() => setCurrentLink(2)}
               >
-                <Link to="#">
-                  <RiDashboard2Fill />
-                  <span> Riders</span>
-                </Link>
-              </li>
-              <li
-                className={currentLink === 3 ? "active" : "none"}
-                onClick={() => setCurrentLink(3)}
-              >
                 <Link to="/employee">
                   <FaAddressCard />
                   <span> Employee</span>
                 </Link>
               </li>
               <li
+                className={currentLink === 3 ? "active" : "none"}
+                onClick={() => setCurrentLink(3)}
+              >
+                <Link to="leave">
+                  <AiFillCalendar />
+                  <span> Calender</span>
+                </Link>
+              </li>
+              <li
                 className={currentLink === 4 ? "active" : "none"}
                 onClick={() => setCurrentLink(4)}
               >
-                <Link to="leave">
-                  <GiTwirlCenter />
-                  <span> Calender</span>
-                </Link>
+                {/* <Link to="#">
+                  <RiDashboard2Fill />
+                  <span> Riders</span>
+                </Link> */}
               </li>
               <li
                 className={currentLink === 5 ? "active" : "none"}
                 onClick={() => setCurrentLink(5)}
               >
-                <Link to="#">
+                {/* <Link to="#">
                   <BsFillChatTextFill />
                   <span> FAQs</span>
-                </Link>
+                </Link> */}
               </li>
               <li
                 className={currentLink === 6 ? "active" : "none"}
                 onClick={() => setCurrentLink(6)}
               >
-                <Link to="#">
+                {/* <Link to="#">
                   <IoSettings />
                   <span> Settings</span>
-                </Link>
+                </Link> */}
               </li>
             </ul>
           </div>
@@ -196,7 +195,7 @@ const Section = styled.section`
       align-items: center;
       gap: 2rem;
       svg {
-        color: #2065d1;//logo
+        color: #2065d1; //logo
         font-size: 2rem;
       }
       h1 {

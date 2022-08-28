@@ -12,7 +12,7 @@ import TablePagination from "@mui/material/TablePagination";
 
 //const Admintoken = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjMsImFkbWluX25hbWUiOiJEaWxzaGFuIiwiZW1haWxfYWRkcmVzcyI6ImFkbWluQGdtYWlsLmNvbSIsIm1vYmlsZV9udW1iZXIiOiIwNzc4OTg5NTk4Iiwic3RhdHVzIjoiQURNSU4ifSwiaWF0IjoxNjU0OTI5NDc2NjY2LCJleHAiOjE2NTQ5MzA2ODYyNjZ9.BuXsouVvXMBhiy0paDBlrmxcnlwC3ypBJoOCQYH9UNc`;
 
-const Employee = (props) => {
+const EmployeeWeekSum = (props) => {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Employee = (props) => {
     // };
     axios
       .get(
-        "http://localhost:8000/user/getAllUsers",
+        "http://localhost:8000/leave/getAllLeaveHrs",
         
       )
       .then((res) => {
@@ -63,15 +63,14 @@ const Employee = (props) => {
                 <TableCell className="tableCell">Emp Id</TableCell>
                 <TableCell className="tableCell">Emp Name</TableCell>
                 <TableCell className="tableCell">Role</TableCell>
-                <TableCell className="tableCell">Email</TableCell>
-                <TableCell className="tableCell">Contact No:</TableCell>
-                <TableCell className="tableCell">City</TableCell>
+                <TableCell className="tableCell">Current Week </TableCell>
+                <TableCell className="tableCell">Worked Hours</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {props.status === "" &&
                 rows
-                  .filter((q) => q.email.toLowerCase().includes(""))
+                  .filter((q) => q.week.toLowerCase().includes(""))
                   .map((row) => (
                     <TableRow
                       hover
@@ -90,13 +89,10 @@ const Employee = (props) => {
                       <span className={`status ${row.user_type}`}>{row.user_type}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.email}</span>
+                        <span>{row.week}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.contactNo}</span>
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        <span>{row.city}</span>
+                        <span>{row.totalhours.slice(0, -3)} / 56 Hrs</span>
                       </TableCell>
                       {/* <TableCell className="tableCell">
                     <Button
@@ -111,13 +107,13 @@ const Employee = (props) => {
                   ))}
               {props.status === "All" &&
                 rows
-                  .filter((q) => q.email.toLowerCase().includes(""))
+                  .filter((q) => q.firstName.toLowerCase().includes(""))
                   .map((row) => (
                     <TableRow
                       hover
                       key={row.Id}
                       onClick={() => {
-                        history.push(`/emp/` + row.Id);
+                        history.push(`/employee/` + row.Id);
                       }}
                     >
                       <TableCell className="tableCell">
@@ -133,10 +129,7 @@ const Employee = (props) => {
                         <span>{row.week}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.contactNo}</span>
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        <span>{row.city}</span>
+                        <span>{row.totalhours.slice(0, -3)} / 8 Hrs</span>
                       </TableCell>
                       {/* <TableCell className="tableCell">
                     <Button
@@ -153,14 +146,14 @@ const Employee = (props) => {
                 .filter(
                   (n) =>
                     n.user_type === props.status &&
-                    n.email.toLowerCase().includes("")
+                    n.firstName.toLowerCase().includes("")
                 )
                 .map((row) => (
                   <TableRow
                       hover
                       key={row.Id}
                       onClick={() => {
-                        history.push(`/emp/` + row.Id);
+                        history.push(`/employee/` + row.Id);
                       }}
                     >
                       <TableCell className="tableCell" >
@@ -176,10 +169,7 @@ const Employee = (props) => {
                         <span>{row.week}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.contactNo}</span>
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        <span>{row.city}</span>
+                        <span>{row.totalhours.slice(0, -3)} / 8 Hrs</span>
                       </TableCell>
                       {/* <TableCell className="tableCell">
                     <Button
@@ -209,6 +199,6 @@ const Employee = (props) => {
   );
 };
 
-export default Employee;
+export default EmployeeWeekSum;
 
 
