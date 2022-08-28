@@ -19,6 +19,7 @@ function App() {
           <Route path="/emp/:id"  exact component={SingleEmp} />
           <Route path="/leave" component={LeaveSummery} />
           <Route path="/ex" component={Example} />
+          <Route path="/em" component={SingleEmp} />
         </Switch>
       </Router>
     </Div>

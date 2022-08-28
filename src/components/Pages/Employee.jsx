@@ -123,7 +123,10 @@ const Employee = () => {
               onChangeIndex={handleChangeIndex}
             >
               <TabPanel value={value} index={0} dir={theme.direction}>
-                <div style={{}}>
+              <div
+                  style={{ display: "flex", justifyContent: "flex-end", }}
+                >
+                
                   <FormControl style={{ minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-label">Role</InputLabel>
                     <Select
@@ -151,12 +154,12 @@ const Employee = () => {
               </TabPanel>
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{ display: "flex", justifyContent: "space-between", }}
                 >
-                  <Button variant="contained" color="success">
+                  <Button variant="contained" style={{ backgroundColor: "#b0cbea",padding: "0 36px 0 36px",height:"40px"}}>
                     Add
                   </Button>
-                  <FormControl style={{ minWidth: 120 }}>
+                  <FormControl style={{ minWidth: 120, }}>
                     <InputLabel id="demo-simple-select-label">Role</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
