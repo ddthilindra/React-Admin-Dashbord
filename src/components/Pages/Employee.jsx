@@ -16,8 +16,9 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import SwipeableViews from 'react-swipeable-views';
-import { useTheme } from '@mui/material/styles';
+import SwipeableViews from "react-swipeable-views";
+import { useTheme } from "@mui/material/styles";
+import { Button } from "@mui/material";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,7 +50,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
@@ -85,7 +86,7 @@ const Employee = () => {
   //   setValue(newValue);
   // };
 
-   const theme = useTheme();
+  const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -95,91 +96,96 @@ const Employee = () => {
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
-  
+
   return (
     <>
       <Section>
         <Navbar text={"Employee"} />
         <div className="empContainer">
-        <Box sx={{ bgcolor: 'background.paper' }}>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab label="Week summery" {...a11yProps(0)} />
-          <Tab label="All Employees" {...a11yProps(1)} />
-          {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-        <div style={{}}>
-              <FormControl style={{ minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Role"
-                  onChange={(e) => setCategory(e.target.value)}
+          <Box sx={{ bgcolor: "background.paper" }}>
+            <AppBar position="static">
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor="secondary"
+                textColor="inherit"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+              >
+                <Tab label="Week summery" {...a11yProps(0)} />
+                <Tab label="All Employees" {...a11yProps(1)} />
+                {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={value}
+              onChangeIndex={handleChangeIndex}
+            >
+              <TabPanel value={value} index={0} dir={theme.direction}>
+                <div style={{}}>
+                  <FormControl style={{ minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Role"
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      <MenuItem value={"All"}>All</MenuItem>
+                      <MenuItem value={"developer"}>Developer</MenuItem>
+                      <MenuItem value={"QA"}>QA</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+
+                {/* <p>{category}</p> */}
+
+                <div className="grid">
+                  <div className="listContainer">
+                    {/* <div className="listTitle">Latest Transactions</div> */}
+
+                    <Table status={category} />
+                  </div>
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={1} dir={theme.direction}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"developer"}>Developer</MenuItem>
-                  <MenuItem value={"QA"}>QA</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+                  <Button variant="contained" color="success">
+                    Add
+                  </Button>
+                  <FormControl style={{ minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Role"
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      <MenuItem value={"All"}>All</MenuItem>
+                      <MenuItem value={"developer"}>Developer</MenuItem>
+                      <MenuItem value={"QA"}>QA</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
 
-            {/* <p>{category}</p> */}
+                {/* <p>{category}</p> */}
 
-            <div className="grid">
-              <div className="listContainer">
-                {/* <div className="listTitle">Latest Transactions</div> */}
+                <div className="grid">
+                  <div className="listContainer">
+                    {/* <div className="listTitle">Latest Transactions</div> */}
 
-                <Table status={category} />
-              </div>
-            </div>
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <div style={{}}>
-              <FormControl style={{ minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Role"
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"developer"}>Developer</MenuItem>
-                  <MenuItem value={"QA"}>QA</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-
-            {/* <p>{category}</p> */}
-
-            <div className="grid">
-              <div className="listContainer">
-                {/* <div className="listTitle">Latest Transactions</div> */}
-
-                <EmpTable status={category} />
-              </div>
-            </div>
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
-        </TabPanel>
-      </SwipeableViews>
-    </Box>
+                    <EmpTable status={category} />
+                  </div>
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={2} dir={theme.direction}>
+                Item Three
+              </TabPanel>
+            </SwipeableViews>
+          </Box>
         </div>
       </Section>
     </>
@@ -192,8 +198,8 @@ const Section = styled.section`
   margin-left: 18vw;
   padding: 2rem;
   height: 100%;
-  .MuiTab-fullWidth{
-    flex-grow: 0
+  .MuiTab-fullWidth {
+    flex-grow: 0;
   }
   .empContainer {
     border-radius: 5px;
