@@ -104,33 +104,33 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
   // const onPhoneFieldChange = (nextValue) => {
   //   onFieldChange({ phoneField: nextValue });
   // };
-  const onCutChange = (nextValue) => {
-    onFieldChange({ hairCut: nextValue });
-  };
+  // const onCutChange = (nextValue) => {
+  //   onFieldChange({ hairCut: nextValue });
+  // };
 
-  const onDyeChange = (nextValue) => {
-    onFieldChange({ hairDye: nextValue });
-  };
+  // const onDyeChange = (nextValue) => {
+  //   onFieldChange({ hairDye: nextValue });
+  // };
 
-  const onEpilationChange = (nextValue) => {
-    onFieldChange({ epilation: nextValue });
-  };
+  // const onEpilationChange = (nextValue) => {
+  //   onFieldChange({ epilation: nextValue });
+  // };
 
-  const onWaxChange = (nextValue) => {
-    onFieldChange({ wax: nextValue });
-  };
+  // const onWaxChange = (nextValue) => {
+  //   onFieldChange({ wax: nextValue });
+  // };
 
-  const onManiPediChange = (nextValue) => {
-    onFieldChange({ maniPedi: nextValue });
-  };
+  // const onManiPediChange = (nextValue) => {
+  //   onFieldChange({ maniPedi: nextValue });
+  // };
 
-  const onBeautyChange = (nextValue) => {
-    onFieldChange({ beauty: nextValue });
-  };
+  // const onBeautyChange = (nextValue) => {
+  //   onFieldChange({ beauty: nextValue });
+  // };
 
-  const setGender = (event) => {
-    console.log(event.target.value);
-  };
+  // const setGender = (event) => {
+  //   console.log(event.target.value);
+  // };
   const onValueChange = (nextValue) => {
     onFieldChange({ work: nextValue });
   };
