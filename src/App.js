@@ -12,12 +12,13 @@ function App() {
   return (
     <Div>
       <Router>
-      <Sidebar/>
+      {/* <Sidebar/> */}
         <Switch>
           <Route path="/" exact component={Dashboard} />
           <Route path="/employee" component={Employee} />          
           <Route path="/emp/:id"  exact component={SingleEmp} />
           <Route path="/leave" component={LeaveSummery} />
+          <Route path="/ex" component={Example} />
         </Switch>
       </Router>
     </Div>
