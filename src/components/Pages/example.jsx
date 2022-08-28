@@ -1,199 +1,119 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import axios from "axios";
-import { green, lightBlue } from '@mui/material/colors';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import {
-  ViewState, EditingState, GroupingState, IntegratedGrouping, IntegratedEditing,
-} from '@devexpress/dx-react-scheduler';
-import {
-  Scheduler,
-  WeekView,
-  Resources,
-  Toolbar,
-  DateNavigator,
-  Appointments,
-  DragDropProvider,
-  GroupingPanel,
-  TodayButton,
-  ViewSwitcher,
-  MonthView,
-  DayView,
-  AppointmentForm,
-  AppointmentTooltip,
-  ConfirmationDialog,
-} from '@devexpress/dx-react-scheduler-material-ui';
-import { data as appointments } from './data2';
-import Navbar from '../Navbar';
+import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import styled from "styled-components";
 
-const PREFIX = 'Demo';
-// #FOLD_BLOCK
-const classes = {
-  formControlLabel: `${PREFIX}-formControlLabel`,
-  text: `${PREFIX}-text`,
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 };
-// #FOLD_BLOCK
-const StyledFormControlLabel = styled(FormControlLabel)(({
-  theme: { spacing, palette, typography },
-}) => ({
-  [`&.${classes.formControlLabel}`]: {
-    padding: spacing(2),
-    paddingLeft: spacing(10),
-  },
-  [`&.${classes.text}`]: {
-    ...typography.caption,
-    color: palette.text.secondary,
-    fontWeight: 'bold',
-    fontSize: '1rem',
-  },
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper
+  }
 }));
 
-const isWeekOrMonthView = viewName => viewName === 'Week' || viewName === 'Month';
+export default function SimpleTabs() {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
 
-const priorityData = [
-  { text: 'Work', id: 1, color: lightBlue },
-  { text: 'Leave', id: 2, color: green },
-];
-const priorityasd = [
-  { text: 'Work', id: 1, color: lightBlue },
-  { text: 'Leave', id: 2, color: green },
-  { text: 'asdasd', id: 3, color: green },
-];
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-const GroupOrderSwitcher = (({ isGroupByDate, onChange }) => (
-  <StyledFormControlLabel
-    control={
-      <Checkbox checked={isGroupByDate} onChange={onChange} color="primary" />
-    }
-    label="Group by Date First"
-    className={classes.formControlLabel}
-    classes={{ label: classes.text }}
-  />
-));
-
-export default class Demo extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      resources: [{
-        fieldName: 'priorityId',
-        title: 'Priority',
-        instances: priorityData,
-      }],
-      grouping: [{
-        resourceName: 'priorityId',
-      }],
-      groupByDate: isWeekOrMonthView,
-      isGroupByDate: true,
-    };
-
-    this.commitChanges = this.commitChanges.bind(this);
-    this.onGroupOrderChange = () => {
-      const { isGroupByDate } = this.state;
-      this.setState({
-        isGroupByDate: !isGroupByDate,
-        groupByDate: isGroupByDate ? undefined : isWeekOrMonthView,
-      });
-    };
-  }
-  async componentDidMount() {
-    await axios
-      .get("http://localhost:8000/leave/getAllLeaves/1")
-      .then((res) => {
-        if (
-          res.data.code == 200 &&
-          res.data.success == true &&
-          res.data.data.length > 0
-        ) {
-          // console.log(res.data);          
-          let arr=res.data.data.filter(appointment => appointment.priorityId < 3)
-          console.log(arr)
-           this.setState({ data: arr });
-        } else {
-          console.log("bad request...");
-        }
-      })
-      .catch((err) => console.log(err));
-  }
-  commitChanges({ added, changed, deleted }) {
-    this.setState((state) => {
-      let { data } = state;
-      if (added) {
-        console.log(added)
-        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
-      }
-      if (changed) {
-        data = data.map(appointment => (
-          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-      }
-      if (deleted !== undefined) {
-        data = data.filter(appointment => appointment.id !== deleted);
-      }
-      return { data };
-    });
-  }
-
-  render() {
-    const {
-      data, resources, grouping, groupByDate, isGroupByDate,
-    } = this.state;
-
-    return (
-      (
-        <div>
-        
-        {/* <Navbar text={"Calender"} /> */}
-          <GroupOrderSwitcher isGroupByDate={isGroupByDate} onChange={this.onGroupOrderChange} />
-          <Paper>
-            <Scheduler
-              data={data}
-              height={660}
-            >
-              <ViewState
-                defaultCurrentDate="2018-05-30"
-              />
-              <EditingState
-                onCommitChanges={this.commitChanges}
-              />
-              <IntegratedEditing />
-              <GroupingState
-                grouping={grouping}
-                groupByDate={groupByDate}
-              />
-              <WeekView
-                startDayHour={8.5}
-                endDayHour={17}
-              />
-              <MonthView />
-              <Toolbar />
-            <DateNavigator />
-            <ViewSwitcher />
-            <TodayButton />
-            <ConfirmationDialog />
-              <DayView startDayHour={9} endDayHour={19} />
-              <Appointments />
-              <Resources
-                data={resources}
-                mainResourceName="priorityId"
-              />
-              <IntegratedGrouping />
-              <IntegratedEditing />
-
-              <AppointmentTooltip />
-              <AppointmentForm />
-              
-            
-            
-              <GroupingPanel />
-              <DragDropProvider />
-            </Scheduler>
-          </Paper>
-        </div>
-      )
-    );
-  }
+  return (
+    <Section>
+      <AppBar position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Item Three" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        Item One
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+    </Section>
+  );
 }
+
+
+const Section = styled.section`
+  margin-left: 18vw;
+  padding: 2rem;
+  height: 100%;
+  .grid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 1rem;
+    margin-top: 2rem;
+    .row__one {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      height: 50%;
+      gap: 1rem;
+    }
+    .row__two {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      height: 50%;
+    }
+  }
+  @media screen and (min-width: 280px) and (max-width: 1080px) {
+    margin-left: 0;
+    .grid {
+      .row__one,
+      .row__two {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+`;
+
