@@ -63,15 +63,15 @@ const TextEditor = (props) => {
 
 const BooleanEditor = (props) => {
   // eslint-disable-next-line react/destructuring-assignment
-  // if (props.label === "All Day" || props.label === "Repeat") {
-  //   return null;
-  // }
+  if (props.label === "All Day" || props.label === "Repeat") {
+    return null;
+  }
   // if (props.label === "All Day") {
   //   // allDay.label="LEave"
   // }
-  if (props.label === "Repeat") {
-    return null;
-  }
+  // if (props.label === "Repeat") {
+  //   return null;
+  // }
 
   return <AppointmentForm.BooleanEditor {...props} />;
 };
@@ -92,9 +92,10 @@ const Appointment = ({ children, style, ...restProps }) => (
 
 let newTitle = "";
 const pData = [
-  { value: 'Start',text: 'Start'},
-  { value: 'Leave',text: 'Leave'},
-  { value: 'Stop',text: 'Stop'},
+  { value: 'Start',text: 'Start',id:1},
+  { value: 'Leave',text: 'Leave',id:2},
+  { value: 'Stop',text: 'Stop',id:3},
+  { value: 'Holiday',text: 'Holiday',id:4},
 ];
 const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
   // const onNameFieldChange = (nextValue) => {
@@ -131,8 +132,11 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
   // const setGender = (event) => {
   //   console.log(event.target.value);
   // };
-  const onValueChange = (nextValue) => {
-    onFieldChange({ work: nextValue });
+  const onSelectValueChange = (nextValue) => {
+    onFieldChange({ status: nextValue });
+    if (nextValue==4){
+      onFieldChange({ allDay: true });
+    }
   };
 
   return (
@@ -142,12 +146,12 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
       {...restProps}
     >
 
-      <AppointmentForm.Label text="Dropdown" type="title" />
+      <AppointmentForm.Label text="Options" type="title" />
       <AppointmentForm.Select
         value={appointmentData.work}
          availableOptions={pData}
-        type="filledSelect"
-        onValueChange={onValueChange}
+        type="outlinedSelect"
+        onValueChange={onSelectValueChange}
         // placeholder="Customer Phone" type: 'outlinedSelect' | 'filledSelect';
       />
 
@@ -222,8 +226,6 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
 };
 
 // ###################################################################
-
-// ############################ GROUPING ##########################
 
 export default class LeaveSummery extends Component {
   Layout = ({ appointmentMeta, visible, onHide, ...restProps }) => {
@@ -347,7 +349,7 @@ export default class LeaveSummery extends Component {
       let { data } = state;
       // window.alert("Asdasd"+state[0])
       if (added) {
-        console.log(added);
+        console.log(added);        
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
@@ -355,16 +357,18 @@ export default class LeaveSummery extends Component {
         const strTime = date.format(added.startDate, "YYYY-MM-DD HH-mm-ss");
         const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
 
-        if (added.title && added.startDate && added.endDate) {
+        if (added.title && added.startDate && added.endDate && added.status) {
           const data = {
             userId: "1",
             title: added.title,
             startTime: strTime,
             endTime: endTime,
+            status:added.status,
+            allDay:added.allDay
           };
           this.add(data);
         } else {
-          console.log("error");
+          window.alert("error");
         }
       }
       if (changed) {
