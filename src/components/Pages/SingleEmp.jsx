@@ -105,6 +105,14 @@ const SingleEmp = () => {
   };
 
   const [data, setdata] = useState();
+
+ 
+
+  // const editIcon = (
+  //   <IconButton onClick={console.log("edited")}>
+  //     <EditIcon color="primary" />
+  //   </IconButton>
+  // );
   return (
     <>
       <Section>
@@ -174,7 +182,6 @@ const SingleEmp = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-              
                 {rows
                   .filter((q) => q.firstName.toLowerCase().includes(""))
                   .map((row) => (

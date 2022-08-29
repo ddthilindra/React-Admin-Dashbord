@@ -20,6 +20,8 @@ import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 import { Button } from "@mui/material";
 
+import AddEmpPopup from "../Popups/EmpApp";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   dir?: string;
@@ -79,12 +81,6 @@ const Employee = () => {
     );
   }, []);
 
-  // const classes = useStyles();
-  // const [value, setValue] = React.useState(0);
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -96,7 +92,13 @@ const Employee = () => {
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
+  const [recordForEdit, setRecordForEdit] = useState(null);
+  const [openPopup, setOpenPopup] = useState(false);
 
+  const openInPopup = (item) => {
+    setRecordForEdit(item);
+    setOpenPopup(true);
+  };
   return (
     <>
       <Section>
@@ -156,9 +158,14 @@ const Employee = () => {
                 <div
                   style={{ display: "flex", justifyContent: "space-between", }}
                 >
-                  <Button variant="contained" style={{ backgroundColor: "#b0cbea",padding: "0 36px 0 36px",height:"40px"}}>
+                  <Button variant="contained" style={{ backgroundColor: "#b0cbea",padding: "0 36px 0 36px",height:"40px"}} onClick={openInPopup}>
                     Add
                   </Button>
+                  <AddEmpPopup
+                openUpdatePopup={openPopup}
+                setUpdateOpenPopup={setOpenPopup}
+                adminrecordForEdit={recordForEdit}
+              ></AddEmpPopup>
                   <FormControl style={{ minWidth: 120, }}>
                     <InputLabel id="demo-simple-select-label">Role</InputLabel>
                     <Select
