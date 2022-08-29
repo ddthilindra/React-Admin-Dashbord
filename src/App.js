@@ -7,17 +7,21 @@ import Sidebar from "./components/Sidebar";
 import LeaveSummery from "./components/Pages/LeaveSummery";
 import Example from "./components/Pages/example";
 import SingleEmp from "./components/Pages/SingleEmp";
+import LoginPage from "./components/Pages/SignIn";
+import SignUp from "./components/Pages/SignUp";
 
 function App() {
   return (
     <Div>
       <Router>
-      <Sidebar/>
+        <Sidebar />
         <Switch>
           <Route path="/" exact component={Dashboard} />
-          <Route path="/employee" component={Employee} />          
-          <Route path="/emp/:id"  exact component={SingleEmp} />
+          <Route path="/login" exact component={LoginPage} />
+          <Route path="/login" exact component={SignUp} />
           <Route path="/leave" component={LeaveSummery} />
+          <Route path="/employee" component={Employee} />
+          <Route path="/emp/:id" exact component={SingleEmp} />
           <Route path="/ex" component={Example} />
           <Route path="/em" component={SingleEmp} />
         </Switch>

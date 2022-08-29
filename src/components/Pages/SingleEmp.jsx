@@ -105,13 +105,11 @@ const SingleEmp = () => {
   };
 
   const [data, setdata] = useState();
-  const componentDidMount = () => {};
-  // const { data, currentDate, resources, grouping, groupByDate, isGroupByDate, } = this.state;
   return (
     <>
       <Section>
-        <Navbar text={"Emp"} />
-        <div >
+        <Navbar text={"Employee Profile"} />
+        <div>
           <Card
             sx={{
               display: "flex",
@@ -133,28 +131,29 @@ const SingleEmp = () => {
               image={image}
               alt="green iguana"
             />
-
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {userData.firstName} {userData.lastName}
-              </Typography>
-              <Typography gutterBottom variant="h7" component="div">
-                Role : {userData.user_type}
-              </Typography>
-              <Typography gutterBottom variant="h7" component="div">
-                Email : {userData.email}
-              </Typography>
-              <Typography gutterBottom variant="h7" component="div">
-                Phone Number : {userData.contactNo}
-              </Typography>
-              <Typography gutterBottom variant="h7" component="div">
-                City : {userData.city}
-              </Typography>
-              {/* <Typography variant="body2" color="text.secondary">
+            {userData && userData.length !== 0 ? (
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {userData.firstName} {userData.lastName}
+                </Typography>
+                <Typography gutterBottom variant="h7" component="div">
+                  Role : {userData.user_type}
+                </Typography>
+                <Typography gutterBottom variant="h7" component="div">
+                  Email : {userData.email}
+                </Typography>
+                <Typography gutterBottom variant="h7" component="div">
+                  Phone No : {userData.contactNo}
+                </Typography>
+                <Typography gutterBottom variant="h7" component="div">
+                  City : {userData.city}
+                </Typography>
+                {/* <Typography variant="body2" color="text.secondary">
               Lizards are a widespread group of squamate reptiles, with over
               6,000 species, ranging across all continents except Antarctica
             </Typography> */}
-            </CardContent>
+              </CardContent>
+            ) : null}
             <CardActions>
               {/* <Button size="small">Share</Button> */}
               {/* <Button size="small">Learn More</Button> */}
@@ -175,6 +174,7 @@ const SingleEmp = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
+              
                 {rows
                   .filter((q) => q.firstName.toLowerCase().includes(""))
                   .map((row) => (
@@ -215,19 +215,11 @@ const SingleEmp = () => {
           </TableContainer>
 
           <Paper>
-            <Scheduler
-              data={data}
-              height={930}
-              // onAppointmentFormOpening={this.onAppointmentFormOpening}
-            >
+            <Scheduler data={data} height={600}>
               <ViewState
               // currentDate={currentDate}
               // onCurrentDateChange={this.currentDateChange}
               />
-              <EditingState />
-
-              <IntegratedEditing />
-
               <WeekView startDayHour={0} endDayHour={24} />
               <WeekView
                 name="work-week"
@@ -238,16 +230,13 @@ const SingleEmp = () => {
               />
               <MonthView />
 
-              <DayView startDayHour={9} endDayHour={19} />
+              <DayView startDayHour={0} endDayHour={24} />
               <Toolbar />
               <DateNavigator />
               <ViewSwitcher />
               <TodayButton />
-              <ConfirmationDialog />
               <Appointments />
-              <AppointmentTooltip showOpenButton showDeleteButton />
-
-              {/* <AppointmentForm /> */}
+              <AppointmentTooltip />
             </Scheduler>
           </Paper>
         </div>

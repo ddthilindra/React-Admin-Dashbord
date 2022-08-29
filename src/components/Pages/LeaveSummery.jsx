@@ -37,12 +37,6 @@ const messages = {
   moreInformationLabel: "",
 };
 
-// const Select = (props) => {
-//   const availableOptions = (nextValue) => {
-//     availableOptions({ pData });
-//   };
-// };
-
 const Label = (props) => {
   // if (props.text === "Details") {
   //   return null;
@@ -60,6 +54,20 @@ const TextEditor = (props) => {
   // }
   return <AppointmentForm.TextEditor {...props} />;
 };
+const checkValidation = ({ onFieldChange, appointmentData, ...restProps }) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  // if (props.type === "multilineTextEditor") {
+  //   return null;
+  // }
+  // console.log("first")
+  // if (restProps.placeholder === "Title") {
+  //   console.log("2")
+  //   return false;
+  // }
+  // return <AppointmentForm.TextEditor {...props} />;
+  console.log("first")
+  onFieldChange({ title: true });      
+};
 
 const BooleanEditor = (props) => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -76,67 +84,21 @@ const BooleanEditor = (props) => {
   return <AppointmentForm.BooleanEditor {...props} />;
 };
 
-const Appointment = ({ children, style, ...restProps }) => (
-  <Appointments.Appointment
-    {...restProps}
-    style={{
-      ...style,
-
-      backgroundColor: "#056DFF",
-      borderRadius: "8px",
-    }}
-  >
-    {children}
-  </Appointments.Appointment>
-);
 
 let newTitle = "";
-const pData = [
+const optionData = [
   { value: 'Start',text: 'Start',id:1},
   { value: 'Leave',text: 'Leave',id:2},
   { value: 'Stop',text: 'Stop',id:3},
   { value: 'Holiday',text: 'Holiday',id:4},
 ];
 const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-  // const onNameFieldChange = (nextValue) => {
-  //   newTitle = nextValue;
-  //   onFieldChange({ customField: nextValue });
-  // };
-  // const onPhoneFieldChange = (nextValue) => {
-  //   onFieldChange({ phoneField: nextValue });
-  // };
-  // const onCutChange = (nextValue) => {
-  //   onFieldChange({ hairCut: nextValue });
-  // };
-
-  // const onDyeChange = (nextValue) => {
-  //   onFieldChange({ hairDye: nextValue });
-  // };
-
-  // const onEpilationChange = (nextValue) => {
-  //   onFieldChange({ epilation: nextValue });
-  // };
-
-  // const onWaxChange = (nextValue) => {
-  //   onFieldChange({ wax: nextValue });
-  // };
-
-  // const onManiPediChange = (nextValue) => {
-  //   onFieldChange({ maniPedi: nextValue });
-  // };
-
-  // const onBeautyChange = (nextValue) => {
-  //   onFieldChange({ beauty: nextValue });
-  // };
-
-  // const setGender = (event) => {
-  //   console.log(event.target.value);
-  // };
-  const onSelectValueChange = (nextValue) => {
+ 
+  const onValueChange = (nextValue) => {
     onFieldChange({ status: nextValue });
     if (nextValue==4){
-      onFieldChange({ allDay: true });
-    }
+      onFieldChange({ allDay: true });      
+    }    
   };
 
   return (
@@ -148,79 +110,13 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
 
       <AppointmentForm.Label text="Options" type="title" />
       <AppointmentForm.Select
-        value={appointmentData.work}
-         availableOptions={pData}
+        value={appointmentData.status}
+         availableOptions={optionData}
         type="outlinedSelect"
-        onValueChange={onSelectValueChange}
-        // placeholder="Customer Phone" type: 'outlinedSelect' | 'filledSelect';
+        onValueChange={onValueChange}
+        placeholder="Customer Phone" 
       />
 
-      {/* <AppointmentForm.Label text="Gender" type="title" /> */}
-
-      {/* <div onChange={setGender.bind(this)} style={{ fontSize: "17" }}>
-        <input
-          type="radio"
-          className="circle1"
-          value="MALE"
-          name="gender"
-          id="blue"
-        />
-        Male
-        <input
-          type="radio"
-          className="circle2"
-          value="FEMALE"
-          name="gender"
-          id="pink"
-        />
-        Female
-      </div>
-      <AppointmentForm.Label text="Operations" type="title" />
-      <AppointmentForm.BooleanEditor
-        label="Hair Cut"
-        value={appointmentData.hairCut}
-        onValueChange={onCutChange}
-      />
-      <AppointmentForm.BooleanEditor
-        label="Hair Dye"
-        value={appointmentData.hairDye}
-        onValueChange={onDyeChange}
-      />
-      <AppointmentForm.BooleanEditor
-        label="Epilation"
-        value={appointmentData.epilation}
-        onValueChange={onEpilationChange}
-      />
-      <AppointmentForm.BooleanEditor
-        label="Wax"
-        value={appointmentData.wax}
-        onValueChange={onWaxChange}
-      />
-      <AppointmentForm.BooleanEditor
-        label="Mani/Pedi"
-        value={appointmentData.maniPedi}
-        onValueChange={onManiPediChange}
-      />
-      <AppointmentForm.BooleanEditor
-        label="Beauty"
-        value={appointmentData.beauty}
-        onValueChange={onBeautyChange}
-      /> */}
-
-      {/* <AppointmentForm.Label text="Customer Name" type="title" />
-      <AppointmentForm.TextEditor
-        value={appointmentData.customField}
-        onValueChange={onNameFieldChange}
-        placeholder="Customer name"
-      /> */}
-      {/* <AppointmentForm.Label text="Customer Phone" type="title" />
-      <AppointmentForm.TextEditor
-        value={appointmentData.phoneField}
-        onValueChange={onPhoneFieldChange}
-        type="numberEditor"
-        placeholder="Customer Phone"
-      /> */}
-      
     </AppointmentForm.BasicLayout>
   );
 };
@@ -228,44 +124,6 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
 // ###################################################################
 
 export default class LeaveSummery extends Component {
-  Layout = ({ appointmentMeta, visible, onHide, ...restProps }) => {
-    return (
-      <>
-        <form>
-          <label>
-            Name:
-            <input type="text" name="name" />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-
-        {/* <select>
-          <option>asdasd</option>
-          <option>asdasd</option>
-          <option>asdasd</option>
-        </select>
-        <AppointmentForm.Label
-          text="Precio Modulo"
-          style={{ backgroundColor: "#b0cbea" }}
-        />
-        <AppointmentForm.TextEditor type="numberEditor" placeholder="Precio" />
-        <AppointmentForm.TextEditor
-          readOnly
-          type="numberEditor"
-          placeholder="Precio"
-        />
-        <AppointmentForm.Select />
-        <AppointmentForm.DateEditor
-          onValueChange={(e) => console.log(e.target.value)}
-        />
-
-        <h1>asdasd</h1>
-        <Button onClick={this.commitChanges}>asdas</Button>
-        
-        <AppointmentForm.commandButtonComponent></AppointmentForm.commandButtonComponent> */}
-      </>
-    );
-  };
 
   constructor(props) {
     super(props);
@@ -305,12 +163,13 @@ export default class LeaveSummery extends Component {
     this.update = (data) => {
       if (this.state.check == 0) {
         this.state.check = 1;
+        console.log("IN")
         console.log(data);
         axios
           .put(`http://localhost:8000/leave/updateLeave`, data)
           .then((response) => {
             if (response.status == 200) {
-              console.log(`${response.status}`);
+              console.log(`>>>>>>> ${response.status}`);
             } else {
               window.alert("Somthing went wrong");
               console.log(`${response.status}`);
@@ -345,20 +204,20 @@ export default class LeaveSummery extends Component {
 
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
-      //const date = require("date-and-time");
-      let { data } = state;
-      // window.alert("Asdasd"+state[0])
-      if (added) {
-        console.log(added);        
-        const startingAddedId =
-          data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
+      var { data } = state;
+      
+      if (added) {     
+        console.log(added) 
+        if(added.status==undefined || added.title==undefined){
+           window.alert("Fill the required field");
+        }        
 
         const strTime = date.format(added.startDate, "YYYY-MM-DD HH-mm-ss");
         const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
 
         if (added.title && added.startDate && added.endDate && added.status) {
-          const data = {
+          
+          const data1 = {
             userId: "1",
             title: added.title,
             startTime: strTime,
@@ -366,129 +225,74 @@ export default class LeaveSummery extends Component {
             status:added.status,
             allDay:added.allDay
           };
-          this.add(data);
+         this.add(data1);
+        
+         if(this.state.check==1){
+          const startingAddedId =
+          data.length > 0 ? data[data.length - 1].id + 1 : 0;
+        data = [...data, { id: startingAddedId, ...added }];
+        window.location.reload(false);
+         }
+         else{
+          window.alert("error");
+         }
         } else {
           window.alert("error");
         }
       }
       if (changed) {
-        console.log(changed);
-        data = data.map((appointment) =>
-          changed[appointment.id]
-            ? { ...appointment, ...changed[appointment.id] }
-            : appointment
-        );
-        var changeSize = Object.keys(changed[Object.keys(changed)]).length;
-
-        if (changeSize == 3) {
-          console.log("3");
-          const strTime = date.format(
+        if(changed[Object.keys(changed)].title==undefined){
+          window.alert("Fill the required field");
+       }  
+        console.log("first")
+        console.log(changed[Object.keys(changed)].status);
+        console.log("first")
+        // data = data.map((appointment) =>
+        //   changed[appointment.id]
+        //     ? { ...appointment, ...changed[appointment.id] }
+        //     : appointment
+        // );
+        //var changeSize = Object.keys(changed[Object.keys(changed)]).length;
+        let strTime,endTime;
+        if(changed[Object.keys(changed)].startDate){
+           strTime = date.format(
             changed[Object.keys(changed)].startDate,
             "YYYY-MM-DD hh-mm-ss"
           );
-          const endTime = date.format(
+          console.log("strTime"+strTime)          
+        }
+        if(changed[Object.keys(changed)].endDate){
+           endTime = date.format(
             changed[Object.keys(changed)].endDate,
             "YYYY-MM-DD hh-mm-ss"
           );
-
-          const data2 = {
-            id: [Object.keys(changed)],
-            title: changed[Object.keys(changed)].title,
-            startTime: strTime,
-            endTime: endTime,
-          };
-          this.update(data2);
-        } else if (changeSize == 2) {
-          console.log("2");
-          if (
-            changed[Object.keys(changed)].title &&
-            changed[Object.keys(changed)].startDate
-          ) {
-            console.log("t s");
-            const strTime = date.format(
-              changed[Object.keys(changed)].startDate,
-              "YYYY-MM-DD hh-mm-ss"
-            );
-            console.log("S " + strTime);
-            const data2 = {
-              id: [Object.keys(changed)],
-              title: changed[Object.keys(changed)].title,
-              startTime: strTime,
-            };
-            this.update(data2);
-          }
-          if (
-            changed[Object.keys(changed)].title &&
-            changed[Object.keys(changed)].endDate
-          ) {
-            console.log("t e");
-            const endTime = date.format(
-              changed[Object.keys(changed)].endDate,
-              "YYYY-MM-DD hh-mm-ss"
-            );
-            const data2 = {
-              id: [Object.keys(changed)],
-              title: changed[Object.keys(changed)].title,
-              endTime: endTime,
-            };
-            this.update(data2);
-          }
-          if (
-            changed[Object.keys(changed)].startDate &&
-            changed[Object.keys(changed)].endDate
-          ) {
-            console.log("s e");
-            const strTime = date.format(
-              changed[Object.keys(changed)].startDate,
-              "YYYY-MM-DD hh-mm-ss"
-            );
-            const endTime = date.format(
-              changed[Object.keys(changed)].endDate,
-              "YYYY-MM-DD hh-mm-ss"
-            );
-            const data2 = {
-              id: [Object.keys(changed)],
-              startTime: strTime,
-              endTime: endTime,
-            };
-            this.update(data2);
-          }
-        } else {
-          console.log("1");
-          if (changed[Object.keys(changed)].title) {
-            console.log("t");
-
-            const data2 = {
-              id: [Object.keys(changed)],
-              title: changed[Object.keys(changed)].title,
-            };
-            this.update(data2);
-          }
-          if (changed[Object.keys(changed)].startDate) {
-            console.log("s");
-            const strTime = date.format(
-              changed[Object.keys(changed)].startDate,
-              "YYYY-MM-DD hh-mm-ss"
-            );
-            const data2 = {
-              id: [Object.keys(changed)],
-              startTime: strTime,
-            };
-            this.update(data2);
-          }
-          if (changed[Object.keys(changed)].endDate) {
-            console.log("e");
-            const endTime = date.format(
-              changed[Object.keys(changed)].endDate,
-              "YYYY-MM-DD hh-mm-ss"
-            );
-            const data2 = {
-              id: [Object.keys(changed)],
-              endTime: endTime,
-            };
-            this.update(data2);
-          }
+          console.log("endTime"+endTime)  
         }
+        
+        
+        const data2 = {
+          id: [Object.keys(changed)],
+          title: changed[Object.keys(changed)].title,
+          startTime: strTime,
+          endTime: endTime,
+          status:changed[Object.keys(changed)].status,
+            allDay:changed[Object.keys(changed)].allDay
+        };
+
+        console.log(">>>>>>")
+        console.log(data2)
+        this.update(data2);
+        if(this.state.check==1){
+                data = data.map((appointment) =>
+              changed[appointment.id]
+                ? { ...appointment, ...changed[appointment.id] }
+                : appointment
+            );
+            window.location.reload(false);
+         }
+         else{
+          window.alert("error");
+         }       
       }
       if (deleted !== undefined) {
         console.log(deleted);
@@ -500,6 +304,7 @@ export default class LeaveSummery extends Component {
           .then((response) => {
             if (response.status == 200) {
               console.log(response.data.message);
+              window.location.reload(false);
             } else {
               window.alert("Somthing went wrong");
               console.log(response.data.message);
@@ -513,12 +318,12 @@ export default class LeaveSummery extends Component {
 
   
   render() {
-    const { data, currentDate, resources, grouping, groupByDate, isGroupByDate, } = this.state;
+    const { data, currentDate } = this.state;
     
     return (
       <Section>
         <Navbar text={"Calender"} />
-        {/* <GroupOrderSwitcher isGroupByDate={isGroupByDate} onChange={this.onGroupOrderChange} /> */}
+        
         <Paper>
           <Scheduler
             data={data}
@@ -558,7 +363,6 @@ export default class LeaveSummery extends Component {
               labelComponent={Label}
               messages={messages}
             />
-            {/* <AppointmentForm /> */}
           </Scheduler>
         </Paper>
       </Section>
