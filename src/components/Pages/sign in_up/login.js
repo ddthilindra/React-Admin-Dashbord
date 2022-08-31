@@ -14,14 +14,14 @@ class Login extends Component {
     super(props);
     this.state = initialState;
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onSignIn = this.onSignIn.bind(this);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit(event) {
+  onSignIn(event) {
     localStorage.clear();
     event.preventDefault();
     let login = {
@@ -90,11 +90,11 @@ class Login extends Component {
             <label htmlFor="chk" aria-hidden="true">Login</label>
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="pswd" placeholder="Password" required />
-            <button>Login</button>
+            <button>Sign in</button>
           </form>
         </div>
       </div>
-      </>
+      </> 
     );
   }
 }

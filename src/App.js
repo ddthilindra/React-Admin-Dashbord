@@ -17,8 +17,8 @@ function App() {
       <Router>
         {/* <Sidebar /> */}
         <Switch>
-          <Route path="/" exact component={Dashboard} />
-          <Route path="/Login" exact component={Login} />
+          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/" exact component={Login} />
           <Route path="/login1" exact component={LoginPage} />
           <Route path="/login2" exact component={SignUp} />
           <Route path="/leave" component={LeaveSummery} />
