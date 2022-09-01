@@ -64,7 +64,7 @@ const EmployeeWeekSum = (props) => {
                 <TableCell className="tableCell">Emp Name</TableCell>
                 <TableCell className="tableCell">Role</TableCell>
                 <TableCell className="tableCell">Current Week </TableCell>
-                <TableCell className="tableCell">Worked Hours</TableCell>
+                <TableCell className="tableCell">Leave Hours</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

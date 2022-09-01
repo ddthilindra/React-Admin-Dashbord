@@ -64,7 +64,7 @@ const Employee = (props) => {
                 <TableCell className="tableCell">Emp Name</TableCell>
                 <TableCell className="tableCell">Role</TableCell>
                 <TableCell className="tableCell">This Week of Month</TableCell>
-                <TableCell className="tableCell">Worked Hours</TableCell>
+                <TableCell className="tableCell">Leave Hours</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

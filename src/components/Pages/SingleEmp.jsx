@@ -178,7 +178,7 @@ const SingleEmp = () => {
                   <TableCell className="tableCell">
                     This Week of Month
                   </TableCell>
-                  <TableCell className="tableCell">Worked Hours</TableCell>
+                  <TableCell className="tableCell">Leave Hours</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import date from "date-and-time";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 import {
   ViewState,
   EditingState,
-  IntegratedEditing,GroupingState,IntegratedGrouping
+  IntegratedEditing,
+  GroupingState,
+  IntegratedGrouping,
 } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
@@ -29,7 +31,7 @@ import styled from "styled-components";
 import Navbar from "../Navbar";
 import { Button, makeStyles } from "@material-ui/core";
 import { green, lightBlue } from "@material-ui/core/colors";
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControlLabel from "@mui/material/FormControlLabel";
 //import { appointments } from "./appointments";
 // ##################################################################
 
@@ -54,20 +56,6 @@ const TextEditor = (props) => {
   // }
   return <AppointmentForm.TextEditor {...props} />;
 };
-const checkValidation = ({ onFieldChange, appointmentData, ...restProps }) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  // if (props.type === "multilineTextEditor") {
-  //   return null;
-  // }
-  // console.log("first")
-  // if (restProps.placeholder === "Title") {
-  //   console.log("2")
-  //   return false;
-  // }
-  // return <AppointmentForm.TextEditor {...props} />;
-  console.log("first")
-  onFieldChange({ title: true });      
-};
 
 const BooleanEditor = (props) => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -84,21 +72,19 @@ const BooleanEditor = (props) => {
   return <AppointmentForm.BooleanEditor {...props} />;
 };
 
-
 let newTitle = "";
 const optionData = [
-  { value: 'Start',text: 'Start',id:1},
-  { value: 'Leave',text: 'Leave',id:2},
-  { value: 'Stop',text: 'Stop',id:3},
-  { value: 'Holiday',text: 'Holiday',id:4},
+  { value: "Start", text: "Start", id: 1 },
+  { value: "Leave", text: "Leave", id: 2 },
+  { value: "Stop", text: "Stop", id: 3 },
+  { value: "Holiday", text: "Holiday", id: 4 },
 ];
 const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
- 
   const onValueChange = (nextValue) => {
     onFieldChange({ status: nextValue });
-    if (nextValue==4){
-      onFieldChange({ allDay: true });      
-    }    
+    if (nextValue == 4) {
+      onFieldChange({ allDay: true });
+    }
   };
 
   return (
@@ -107,16 +93,14 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
       onFieldChange={onFieldChange}
       {...restProps}
     >
-
       <AppointmentForm.Label text="Options" type="title" />
       <AppointmentForm.Select
         value={appointmentData.status}
-         availableOptions={optionData}
+        availableOptions={optionData}
         type="outlinedSelect"
         onValueChange={onValueChange}
-        placeholder="Customer Phone" 
+        placeholder="Customer Phone"
       />
-
     </AppointmentForm.BasicLayout>
   );
 };
@@ -124,7 +108,6 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
 // ###################################################################
 
 export default class LeaveSummery extends Component {
-
   constructor(props) {
     super(props);
 
@@ -133,13 +116,13 @@ export default class LeaveSummery extends Component {
       currentDate: new Date(),
       //"2018-06-27"
       check: 0,
-    }
+    };
     this.currentDateChange = (currentDate) => {
       this.setState({ currentDate });
     };
 
     this.commitChanges = this.commitChanges.bind(this);
-    
+
     this.add = (data) => {
       if (this.state.check == 0) {
         this.state.check = 1;
@@ -163,7 +146,7 @@ export default class LeaveSummery extends Component {
     this.update = (data) => {
       if (this.state.check == 0) {
         this.state.check = 1;
-        console.log("IN")
+        console.log("IN");
         console.log(data);
         axios
           .put(`http://localhost:8000/leave/updateLeave`, data)
@@ -193,7 +176,7 @@ export default class LeaveSummery extends Component {
           res.data.success == true &&
           res.data.data.length > 0
         ) {
-          console.log(res.data);
+          // console.log(res.data);
           this.setState({ data: res.data.data });
         } else {
           console.log("bad request...");
@@ -206,98 +189,100 @@ export default class LeaveSummery extends Component {
     this.setState((state) => {
       var { data } = state;
       
-      if (added) {     
-        console.log(added) 
-        if(added.status==undefined || added.title==undefined){
-           window.alert("Fill the required field");
-        }        
+      if (added) {
+        if (added.status == undefined || added.title == undefined) {
+          window.alert("Fill the required field");
+        }
+
+        // if (added.allDay) {
+        //   console.log(added.allDay);
+
+        //   strTime = date.format(added.startDate, "YYYY-MM-DD 00-01-ss");
+        //   endTime = date.format(added.endDate, "YYYY-MM-DD 23-59-ss");
+        //   console.log(strTime);
+        //   console.log(endTime);
+        // } else {
+        //   console.log(added.allDay);
+        //   strTime = date.format(added.startDate, "YYYY-MM-DD HH-mm-ss");
+        //   endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
+        //   console.log(strTime);
+        //   console.log(endTime);
+        // }
 
         const strTime = date.format(added.startDate, "YYYY-MM-DD HH-mm-ss");
-        const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
+          const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
 
         if (added.title && added.startDate && added.endDate && added.status) {
-          
           const data1 = {
             userId: "1",
             title: added.title,
             startTime: strTime,
             endTime: endTime,
-            status:added.status,
-            allDay:added.allDay
+            status: added.status,
+            allDay: added.allDay,
           };
-         this.add(data1);
-        
-         if(this.state.check==1){
-          const startingAddedId =
-          data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
-        window.location.reload(false);
-         }
-         else{
-          window.alert("error");
-         }
+          this.add(data1);
+
+          if (this.state.check == 1) {
+            const startingAddedId =
+              data.length > 0 ? data[data.length - 1].id + 1 : 0;
+            data = [...data, { id: startingAddedId, ...added }];
+            window.location.reload(false);
+          } else {
+            window.alert("error");
+          }
         } else {
           window.alert("error");
         }
       }
       if (changed) {
-        if(changed[Object.keys(changed)].title==undefined){
+        if (changed[Object.keys(changed)].title == undefined) {
           window.alert("Fill the required field");
-       }  
-        console.log("first")
-        console.log(changed[Object.keys(changed)].status);
-        console.log("first")
+        }
+        // console.log(changed[Object.keys(changed)].status);
         // data = data.map((appointment) =>
         //   changed[appointment.id]
         //     ? { ...appointment, ...changed[appointment.id] }
         //     : appointment
         // );
         //var changeSize = Object.keys(changed[Object.keys(changed)]).length;
-        let strTime,endTime;
-        if(changed[Object.keys(changed)].startDate){
-           strTime = date.format(
+        let strTime, endTime;
+        if (changed[Object.keys(changed)].startDate) {
+          strTime = date.format(
             changed[Object.keys(changed)].startDate,
-            "YYYY-MM-DD hh-mm-ss"
+            "YYYY-MM-DD HH-mm-ss"
           );
-          console.log("strTime"+strTime)          
         }
-        if(changed[Object.keys(changed)].endDate){
-           endTime = date.format(
+        if (changed[Object.keys(changed)].endDate) {
+          endTime = date.format(
             changed[Object.keys(changed)].endDate,
-            "YYYY-MM-DD hh-mm-ss"
+            "YYYY-MM-DD HH-mm-ss"
           );
-          console.log("endTime"+endTime)  
         }
-        
-        
+
         const data2 = {
           id: [Object.keys(changed)],
           title: changed[Object.keys(changed)].title,
           startTime: strTime,
           endTime: endTime,
-          status:changed[Object.keys(changed)].status,
-            allDay:changed[Object.keys(changed)].allDay
+          status: changed[Object.keys(changed)].status,
+          allDay: changed[Object.keys(changed)].allDay,
         };
 
-        console.log(">>>>>>")
-        console.log(data2)
         this.update(data2);
-        if(this.state.check==1){
-                data = data.map((appointment) =>
-              changed[appointment.id]
-                ? { ...appointment, ...changed[appointment.id] }
-                : appointment
-            );
-            window.location.reload(false);
-         }
-         else{
+        if (this.state.check == 1) {
+          data = data.map((appointment) =>
+            changed[appointment.id]
+              ? { ...appointment, ...changed[appointment.id] }
+              : appointment
+          );
+          window.location.reload(false);
+        } else {
           window.alert("error");
-         }       
+        }
       }
       if (deleted !== undefined) {
-        console.log(deleted);
         data = data.filter((appointment) => appointment.id !== deleted);
-        //console.log(deleted);
 
         axios
           .delete(`http://localhost:8000/leave/deleteLeave/${deleted}`)
@@ -316,14 +301,13 @@ export default class LeaveSummery extends Component {
     });
   }
 
-  
   render() {
     const { data, currentDate } = this.state;
-    
+
     return (
       <Section>
         <Navbar text={"Calender"} />
-        
+
         <Paper>
           <Scheduler
             data={data}
@@ -335,7 +319,7 @@ export default class LeaveSummery extends Component {
               onCurrentDateChange={this.currentDateChange}
             />
             <EditingState onCommitChanges={this.commitChanges} />
-           
+
             <IntegratedEditing />
 
             <WeekView startDayHour={0} endDayHour={24} />
@@ -347,7 +331,7 @@ export default class LeaveSummery extends Component {
               endDayHour={19}
             />
             <MonthView />
-           
+
             <DayView startDayHour={9} endDayHour={19} />
             <Toolbar />
             <DateNavigator />
