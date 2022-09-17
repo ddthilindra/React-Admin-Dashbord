@@ -10,21 +10,25 @@ import { FiLogOut } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 import { AiFillCalendar } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Sidebar() {
+  const history = useHistory();
   const [currentLink, setCurrentLink] = useState(1);
   const [navbarState, setNavbarState] = useState(false);
   const html = document.querySelector("html");
   html.addEventListener("click", () => setNavbarState(false));
-
+  function handleLogout() {
+    localStorage.clear();
+    history.push("/");
+  }
   return (
     <>
       <Section>
         <div className="top">
           <div className="brand">
             {/* <FaTaxi /> */}
-            <h1>Hasthiya IT</h1>
+            <h1>EMPsys</h1>
           </div>
           <div className="toggle">
             {navbarState ? (
@@ -44,7 +48,7 @@ export default function Sidebar() {
                 className={currentLink === 1 ? "active" : "none"}
                 onClick={() => setCurrentLink(1)}
               >
-                <Link to="/">
+                <Link to="/home">
                   <MdSpaceDashboard />
                   <span> Dashboard</span>
                 </Link>
@@ -98,7 +102,7 @@ export default function Sidebar() {
           </div>
         </div>
         <div className="logout">
-          <Link to="#">
+          <Link onClick={handleLogout}>
             <FiLogOut />
             <span className="logout">Logout</span>
           </Link>
@@ -241,6 +245,7 @@ const Section = styled.section`
   .logout {
     padding: 0.3rem 1rem;
     border-radius: 0.6rem;
+    background-color: #9dbae6;
     &:hover {
       background-color: #da0037;
     }

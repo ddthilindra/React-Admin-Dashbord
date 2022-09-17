@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Navbar from "../Navbar";
+import Navbar from "../components/Navbar";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import scrollreveal from "scrollreveal";
-import Table from "../EmpWeekSumTable";
-import EmpTable from "../EmpTable";
+import Table from "../components/EmpWeekSumTable";
+import EmpTable from "../components/EmpTable";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -20,7 +20,9 @@ import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 import { Button } from "@mui/material";
 
-import AddEmpPopup from "../Popups/EmpApp";
+import AddEmpPopup from "../components/Popups/EmpApp";
+import Sidebar from "../components/Sidebar";
+import { useHistory } from "react-router-dom";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -58,10 +60,13 @@ function a11yProps(index: number) {
 
 // #####################################
 const Employee = () => {
-  const categories = ["approved", "pending"];
+  const history = useHistory();
   const [category, setCategory] = useState("");
 
   useEffect(() => {
+    if (!localStorage.getItem("isLoggedIn")) {
+      history.push("/");
+    }
     const sr = scrollreveal({
       origin: "left",
       distance: "80px",
@@ -101,6 +106,7 @@ const Employee = () => {
   };
   return (
     <>
+    <Sidebar />
       <Section>
         <Navbar text={"Employee"} />
         <div className="empContainer">

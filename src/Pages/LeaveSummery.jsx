@@ -28,10 +28,11 @@ import {
   ConfirmationDialog,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import styled from "styled-components";
-import Navbar from "../Navbar";
+import Navbar from "../components/Navbar";
 import { Button, makeStyles } from "@material-ui/core";
 import { green, lightBlue } from "@material-ui/core/colors";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Sidebar from "../components/Sidebar";
 //import { appointments } from "./appointments";
 // ##################################################################
 
@@ -108,6 +109,7 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
 // ###################################################################
 
 export default class LeaveSummery extends Component {
+  
   constructor(props) {
     super(props);
 
@@ -168,8 +170,13 @@ export default class LeaveSummery extends Component {
   }
 
   async componentDidMount() {
+    const token=localStorage.getItem("token")
+    console.log(token)
+    const config = {
+      headers: { Authorization: token },
+    };
     await axios
-      .get("http://localhost:8000/leave/getAllLeaves/1")
+      .get("http://localhost:8000/leave/getAllLeaves",config)
       .then((res) => {
         if (
           res.data.code == 200 &&
@@ -305,7 +312,9 @@ export default class LeaveSummery extends Component {
     const { data, currentDate } = this.state;
 
     return (
-      <Section>
+      <>
+      <Sidebar />
+        <Section>
         <Navbar text={"Calender"} />
 
         <Paper>
@@ -350,6 +359,7 @@ export default class LeaveSummery extends Component {
           </Scheduler>
         </Paper>
       </Section>
+      </>
     );
   }
 }

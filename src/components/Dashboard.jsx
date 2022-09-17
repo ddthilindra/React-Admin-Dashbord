@@ -8,9 +8,14 @@ import Profile from "./Profile";
 import Transfers from "./Transfers";
 import scrollreveal from "scrollreveal";
 import Sidebar from "./Sidebar";
+import { useHistory } from "react-router-dom";
 
 export default function Dashboard() {
+  const history = useHistory();
   useEffect(() => {
+    if (!localStorage.getItem("isLoggedIn")) {
+      history.push("/");
+    }
     console.log("first")
     const sr = scrollreveal({
       origin: "bottom",
@@ -32,6 +37,7 @@ export default function Dashboard() {
   }, []);
   return (
   <>
+  <Sidebar />
     <Section>
     <Navbar text={"HR System"}/>
       <div className="grid">

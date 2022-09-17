@@ -10,8 +10,8 @@ export default function Analytics() {
     <Section>
       <div className="analytic ">
         <div className="content">
-          <h5>Spent this month</h5>
-          <h2>$682.5</h2>
+          <h5>Leave Hours</h5>
+          <h2>08:30 / 56 Hrs</h2>
         </div>
         <div className="logo">
           <BsFillCalendar2WeekFill />
@@ -22,8 +22,8 @@ export default function Analytics() {
           <IoStatsChart />
         </div>
         <div className="content">
-          <h5>Earnings</h5>
-          <h2>$350.40</h2>
+          <h5>No of Projects</h5>
+          <h2>18</h2>
         </div>
       </div>
       <div className="analytic">
@@ -31,13 +31,13 @@ export default function Analytics() {
           <BiGroup />
         </div>
         <div className="content">
-          <h5>New clients</h5>
-          <h2>321</h2>
+          <h5>Employees</h5>
+          <h2>23</h2>
         </div>
       </div>
       <div className="analytic ">
         <div className="content">
-          <h5>Activity</h5>
+          <h5>Earnings</h5>
           <h2>$540.50</h2>
         </div>
         <div className="logo">

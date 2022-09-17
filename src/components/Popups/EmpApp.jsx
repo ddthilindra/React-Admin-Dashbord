@@ -9,8 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { Button } from "@mui/material";
 
-//const AdminId = localStorage.getItem("AdminID");
-const Admintoken = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
 export default function AdminAddUpdate(props) {
   const { openUpdatePopup, setUpdateOpenPopup, adminrecordForEdit } = props;
@@ -166,8 +165,7 @@ export default function AdminAddUpdate(props) {
     }
   }
 
-  //const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjMsImFkbWluX25hbWUiOiJEaWxzaGFuIiwiZW1haWxfYWRkcmVzcyI6ImFkbWluQGdtYWlsLmNvbSIsIm1vYmlsZV9udW1iZXIiOiIwNzc4OTg5NTk4Iiwic3RhdHVzIjoiQURNSU4ifSwiaWF0IjoxNjU0OTI5NDc2NjY2LCJleHAiOjE2NTQ5MzA2ODYyNjZ9.BuXsouVvXMBhiy0paDBlrmxcnlwC3ypBJoOCQYH9UNc`;
-
+ 
   async function addAdmin(e) {
     e.preventDefault();
     const validation = await validate();

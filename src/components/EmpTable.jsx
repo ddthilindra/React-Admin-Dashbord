@@ -83,7 +83,7 @@ const Employee = (props) => {
                     hover
                     key={row.Id}
                     onClick={() => {
-                      history.push(`/emp/` + row.Id);
+                      history.push(`/employees/emp/` + row.Id);
                     }}
                   >
                     <TableCell className="tableCell">
@@ -134,7 +134,7 @@ const Employee = (props) => {
                     hover
                     key={row.Id}
                     onClick={() => {
-                      history.push(`/emp/` + row.Id);
+                      history.push(`/employees/emp/` + row.Id);
                     }}
                   >
                     <TableCell className="tableCell">
@@ -182,7 +182,7 @@ const Employee = (props) => {
                   hover
                   key={row.Id}
                   onClick={() => {
-                    history.push(`/emp/` + row.Id);
+                    history.push(`/employees/emp/` + row.Id);
                   }}
                 >
                   <TableCell className="tableCell">

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 // import "../components/styles/single.scss";
-import Navbar from "../Navbar";
+import Navbar from "../components/Navbar";
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -15,7 +15,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useHistory } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
-import image from "../../assets/empProfile.png";
+import image from "../assets/empProfile.png";
 
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -48,14 +48,19 @@ import {
   AppointmentTooltip,
   ConfirmationDialog,
 } from "@devexpress/dx-react-scheduler-material-ui";
+import Sidebar from "../components/Sidebar";
 
 const SingleEmp = () => {
+  const history = useHistory();
   const { id } = useParams();
   console.log("id is:", id);
   const [rows, setRows] = useState([]);
   const [userData, setuserData] = useState([]);
 
   useEffect(() => {
+    if (!localStorage.getItem("isLoggedIn")) {
+      history.push("/");
+    }
     axios
       .get(`http://localhost:8000/user/getUserById/${id}`)
 
@@ -115,6 +120,8 @@ const SingleEmp = () => {
   // );
   return (
     <>
+    <Sidebar />
+    <Sidebar />
       <Section>
         <Navbar text={"Employee Profile"} />
         <div>
