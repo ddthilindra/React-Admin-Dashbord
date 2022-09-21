@@ -189,7 +189,7 @@ export default class LeaveSummery extends Component {
           window.alert(res.data.message)
         }
       })
-      .catch((err) => window.alert(`${err.response.data.message}`));
+      .catch((err) => console.log(err.response.data.message));
   }
 
   commitChanges({ added, changed, deleted }) {

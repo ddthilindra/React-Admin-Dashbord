@@ -100,7 +100,7 @@ const SingleEmp = () => {
           window.alert(res.data.message)
         }
       })
-      .catch((err) => window.alert(`${err.response.data.message}`));
+      .catch((err) => console.log(err.response.data.message));
   }, []);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
