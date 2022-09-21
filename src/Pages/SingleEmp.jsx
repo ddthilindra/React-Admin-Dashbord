@@ -94,7 +94,7 @@ const SingleEmp = () => {
           res.data.success == true &&
           res.data.data.length > 0
         ) {
-          console.log(res.data);
+          // console.log(res.data);
           setdata(JSON.parse(JSON.stringify(res.data.data)));
         } else {
           window.alert(res.data.message)

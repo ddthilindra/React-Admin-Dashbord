@@ -20,11 +20,9 @@ function App() {
         {/* <Sidebar /> */}
           <Route path="/" exact component={SignIn} />
           <Route path="/home" exact component={Dashboard} />
-          {/* <Route path="/login" exact component={SignUp} /> */}
-          <Route path="/leave" component={Calender} />
-          <Route path="/employee" component={Employee} />
-          <Route path="/employees/emp/:id" exact component={SingleEmp} />
-          {/* <Route path="/em" component={SingleEmp} /> */}
+          <Route path="/employee" exact component={Employee} />
+          <Route path="/leave" exact component={Calender} />
+          <Route path="/employees/emp/:id"  component={SingleEmp} />
         </Switch>
       </Router>
     </Div>
