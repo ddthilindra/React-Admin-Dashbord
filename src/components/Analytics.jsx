@@ -11,7 +11,7 @@ export default function Analytics() {
       <div className="analytic ">
         <div className="content">
           <h5>Leave Hours</h5>
-          <h2>08:30 / 56 Hrs</h2>
+          <h2>08:30 / 45 Hrs</h2>
         </div>
         <div className="logo">
           <BsFillCalendar2WeekFill />

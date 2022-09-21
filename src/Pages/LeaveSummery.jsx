@@ -329,7 +329,7 @@ export default class LeaveSummery extends Component {
 
               <IntegratedEditing />
 
-              <WeekView startDayHour={0} endDayHour={24} />
+              <WeekView startDayHour={7} endDayHour={18} />
               <WeekView
                 name="work-week"
                 displayName="Work Week"
@@ -339,7 +339,7 @@ export default class LeaveSummery extends Component {
               />
               <MonthView />
 
-              <DayView startDayHour={9} endDayHour={19} />
+              <DayView startDayHour={7} endDayHour={18} />
               <Toolbar />
               <DateNavigator />
               <ViewSwitcher />

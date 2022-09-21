@@ -93,7 +93,7 @@ const EmployeeWeekSum = (props) => {
                         <span>{row.week}</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.totalhours.slice(0, -3)} / 56 Hrs</span>
+                        <span>{row.totalhours.slice(0, -3)} / 45 Hrs</span>
                       </TableCell>
                       {/* <TableCell className="tableCell">
                     <Button

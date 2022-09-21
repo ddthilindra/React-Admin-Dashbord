@@ -144,7 +144,7 @@ const Employee = () => {
                       onChange={(e) => setCategory(e.target.value)}
                     >
                       <MenuItem value={"All"}>All</MenuItem>
-                      <MenuItem value={"developer"}>Developer</MenuItem>
+                      <MenuItem value={"Developer"}>Developer</MenuItem>
                       <MenuItem value={"QA"}>QA</MenuItem>
                     </Select>
                   </FormControl>
@@ -181,7 +181,7 @@ const Employee = () => {
                       onChange={(e) => setCategory(e.target.value)}
                     >
                       <MenuItem value={"All"}>All</MenuItem>
-                      <MenuItem value={"developer"}>Developer</MenuItem>
+                      <MenuItem value={"Developer"}>Developer</MenuItem>
                       <MenuItem value={"QA"}>QA</MenuItem>
                     </Select>
                   </FormControl>

@@ -189,7 +189,7 @@ const SingleEmp = () => {
                   <TableCell className="tableCell">Emp Name</TableCell>
                   <TableCell className="tableCell">Role</TableCell>
                   <TableCell className="tableCell">
-                    This Week of Month
+                    Week of Month
                   </TableCell>
                   <TableCell className="tableCell">Leave Hours</TableCell>
                 </TableRow>
@@ -213,10 +213,10 @@ const SingleEmp = () => {
                         </span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.week}</span>
+                        <span>{row.week} - Week</span>
                       </TableCell>
                       <TableCell className="tableCell">
-                        <span>{row.totalhours.slice(0, -3)} / 56 Hrs</span>
+                        <span>{row.totalhours.slice(0, -3)} / 45 Hrs</span>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -240,7 +240,7 @@ const SingleEmp = () => {
               // currentDate={currentDate}
               // onCurrentDateChange={this.currentDateChange}
               />
-              <WeekView startDayHour={0} endDayHour={24} />
+              <WeekView startDayHour={7} endDayHour={18} />
               <WeekView
                 name="work-week"
                 displayName="Work Week"
@@ -250,7 +250,7 @@ const SingleEmp = () => {
               />
               <MonthView />
 
-              <DayView startDayHour={0} endDayHour={24} />
+              <DayView startDayHour={7} endDayHour={18} />
               <Toolbar />
               <DateNavigator />
               <ViewSwitcher />
