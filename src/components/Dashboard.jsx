@@ -16,7 +16,6 @@ export default function Dashboard() {
     if (!localStorage.getItem("isLoggedIn")) {
       history.push("/");
     }
-    console.log("first")
     const sr = scrollreveal({
       origin: "bottom",
       distance: "80px",

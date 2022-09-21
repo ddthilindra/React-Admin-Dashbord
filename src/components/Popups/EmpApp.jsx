@@ -109,110 +109,98 @@ export default function AdminAddUpdate(props) {
     setlnameError("");
 
     if (fname == "") {
-      console.log("empty admin_name");
       setErrorFname(true);
       setfNameError("This field is required");
     }
     if (!lname.trim()) {
-      console.log("empty email_address");
       seterrorLname(true);
       setlnameError("This field is required");
     }
     if (!city.trim()) {
-      console.log("empty email_address");
       setErrorCity(true);
       setcityError("This field is required");
     }
     if (!email_address.trim()) {
-      console.log("empty email_address");
       setErrorEmail(true);
       setemailAddressError("This field is required");
     }
     if (!role.trim()) {
-      console.log("empty email_address");
       setErrorRole(true);
       setroleError("This field is required");
     }
     if (mobile_number < 10) {
-      console.log("empty mobile_number");
       setErrorPhone(true);
       setPhoneError("This field is required");
     }
     //password validation
     const cond3 = "/^(?=.*[0-9]).{6,20}$/";
     if (!password) {
-      console.log("empty password");
       setErrorPass(true);
       setPassError("This field is required");
     } else if (password.length < 6) {
-      console.log("empty password");
       setErrorPass(true);
       setPassError("Password must be longer than 6 characters");
     } else if (password.length >= 20) {
-      console.log("empty password");
       setErrorPass(true);
       setPassError("Password must shorter than 20 characters");
     }
 
     if (!cpassword.trim()) {
-      console.log("empty password");
       setErrorCPass(true);
       setCPassError("This field is required");
     } else if (cpassword != password) {
-      console.log("passward missmatch");
       setErrorCPass(true);
       setCPassError("Password does not match confirmation password");
     }
   }
 
- 
   async function addAdmin(e) {
     e.preventDefault();
     const validation = await validate();
     if (fname && email_address && mobile_number && password && cpassword) {
-    //   const config = {
-    //     headers: { Authorization: Admintoken },
-    //   };
+      //   const config = {
+      //     headers: { Authorization: Admintoken },
+      //   };
       const empData = {
-        firstName:fname,
-        lastName:lname,
-        email:email_address,
-        contactNo:mobile_number,
-        password,
+        firstName: fname,
+        lastName: lname,
+        email: email_address,
+        contactNo: mobile_number,
         city,
-        user_type:role,
+        user_type: role,
+        password,
       };
-console.log(empData)
+      console.log(empData);
       axios
         .post(`http://localhost:8000/user/register`, empData)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
 
           if (response.status == 200) {
             window.alert(`${response.data.message}`);
             setUpdateOpenPopup(false);
             window.location.reload(false);
-            console.log(`${response.status}`);
-            console.log(response.data.message);
+            // console.log(`${response.status}`);
+            // console.log(response.data.message);
             setfname("");
             setemail_address("");
             setmobile_number("");
             setpassword("");
             setcpassword("");
           } else {
-            window.alert("Somthing went wrong");
-            console.log(`${response.status}`);
-            console.log(response.data.message);
+            window.alert(response.data.message);
+            // console.log(`${response.status}`);
+            // console.log(response.data.message);
           }
         })
         .catch((err) => {
-          console.log("Sever error");
+          // console.log("Sever error");
           if (
             err.response &&
             err.response.status >= 400 &&
             err.response.status <= 500
           ) {
-            window.alert("Sever error");
+            window.alert(`${err.response.data.message}`);
           }
         });
     } else {

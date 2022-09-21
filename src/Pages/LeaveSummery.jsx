@@ -109,10 +109,13 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
 // ###################################################################
 
 export default class LeaveSummery extends Component {
-  
   constructor(props) {
     super(props);
+    const token = localStorage.getItem("token");
 
+    const config = {
+      headers: { Authorization: token },
+    };
     this.state = {
       data: [],
       currentDate: new Date(),
@@ -129,26 +132,24 @@ export default class LeaveSummery extends Component {
       if (this.state.check == 0) {
         this.state.check = 1;
         axios
-          .post(`http://localhost:8000/leave/addLeave`, data)
+          .post(`http://localhost:8000/leave/addLeave`, data, config)
           .then((response) => {
             if (response.status == 200) {
               console.log(`${response.status}`);
             } else {
-              window.alert("Somthing went wrong");
-              console.log(`${response.status}`);
-              console.log(response.data.message);
+              window.alert(response.data.message);
+              // console.log(`${response.status}`);
+              // console.log(response.data.message);
             }
           })
           .catch((err) => {
-            console.log("Sever error");
-            console.log(err);
+            window.alert(`${err.response.data.message}`);
           });
       }
     };
     this.update = (data) => {
       if (this.state.check == 0) {
         this.state.check = 1;
-        console.log("IN");
         console.log(data);
         axios
           .put(`http://localhost:8000/leave/updateLeave`, data)
@@ -157,26 +158,25 @@ export default class LeaveSummery extends Component {
               console.log(`>>>>>>> ${response.status}`);
             } else {
               window.alert("Somthing went wrong");
-              console.log(`${response.status}`);
-              console.log(response.data.message);
+              // console.log(`${response.status}`);
+              // console.log(response.data.message);
             }
           })
           .catch((err) => {
-            console.log("Sever error");
-            console.log(err);
+            window.alert(`${err.response.data.message}`);
           });
       }
     };
   }
 
   async componentDidMount() {
-    const token=localStorage.getItem("token")
-    console.log(token)
+    const token = localStorage.getItem("token");
+
     const config = {
       headers: { Authorization: token },
     };
     await axios
-      .get("http://localhost:8000/leave/getAllLeaves",config)
+      .get("http://localhost:8000/leave/getAllLeaves", config)
       .then((res) => {
         if (
           res.data.code == 200 &&
@@ -186,16 +186,16 @@ export default class LeaveSummery extends Component {
           // console.log(res.data);
           this.setState({ data: res.data.data });
         } else {
-          console.log("bad request...");
+          window.alert(res.data.message)
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => window.alert(`${err.response.data.message}`));
   }
 
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
       var { data } = state;
-      
+
       if (added) {
         if (added.status == undefined || added.title == undefined) {
           window.alert("Fill the required field");
@@ -217,11 +217,10 @@ export default class LeaveSummery extends Component {
         // }
 
         const strTime = date.format(added.startDate, "YYYY-MM-DD HH-mm-ss");
-          const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
+        const endTime = date.format(added.endDate, "YYYY-MM-DD HH-mm-ss");
 
         if (added.title && added.startDate && added.endDate && added.status) {
           const data1 = {
-            userId: "1",
             title: added.title,
             startTime: strTime,
             endTime: endTime,
@@ -295,14 +294,14 @@ export default class LeaveSummery extends Component {
           .delete(`http://localhost:8000/leave/deleteLeave/${deleted}`)
           .then((response) => {
             if (response.status == 200) {
-              console.log(response.data.message);
+              // console.log(response.data.message);
               window.location.reload(false);
             } else {
               window.alert("Somthing went wrong");
-              console.log(response.data.message);
+              // console.log(response.data.message);
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => window.alert(`${err.response.data.message}`));
       }
       return { data };
     });
@@ -313,87 +312,85 @@ export default class LeaveSummery extends Component {
 
     return (
       <>
-      <Sidebar />
-        <Section>
-        <Navbar text={"Calender"} />
+        
+          
 
-        <Paper>
-          <Scheduler
-            data={data}
-            height={930}
-            onAppointmentFormOpening={this.onAppointmentFormOpening}
-          >
-            <ViewState
-              currentDate={currentDate}
-              onCurrentDateChange={this.currentDateChange}
-            />
-            <EditingState onCommitChanges={this.commitChanges} />
+          <Paper>
+            <Scheduler
+              data={data}
+              height={930}
+              onAppointmentFormOpening={this.onAppointmentFormOpening}
+            >
+              <ViewState
+                currentDate={currentDate}
+                onCurrentDateChange={this.currentDateChange}
+              />
+              <EditingState onCommitChanges={this.commitChanges} />
 
-            <IntegratedEditing />
+              <IntegratedEditing />
 
-            <WeekView startDayHour={0} endDayHour={24} />
-            <WeekView
-              name="work-week"
-              displayName="Work Week"
-              excludedDays={[0, 6]}
-              startDayHour={9}
-              endDayHour={19}
-            />
-            <MonthView />
+              <WeekView startDayHour={0} endDayHour={24} />
+              <WeekView
+                name="work-week"
+                displayName="Work Week"
+                excludedDays={[0, 6]}
+                startDayHour={9}
+                endDayHour={19}
+              />
+              <MonthView />
 
-            <DayView startDayHour={9} endDayHour={19} />
-            <Toolbar />
-            <DateNavigator />
-            <ViewSwitcher />
-            <TodayButton />
-            <ConfirmationDialog />
-            <Appointments />
-            <AppointmentTooltip showOpenButton showDeleteButton />
-            <AppointmentForm
-              basicLayoutComponent={BasicLayout}
-              textEditorComponent={TextEditor}
-              booleanEditorComponent={BooleanEditor}
-              labelComponent={Label}
-              messages={messages}
-            />
-          </Scheduler>
-        </Paper>
-      </Section>
+              <DayView startDayHour={9} endDayHour={19} />
+              <Toolbar />
+              <DateNavigator />
+              <ViewSwitcher />
+              <TodayButton />
+              <ConfirmationDialog />
+              <Appointments />
+              <AppointmentTooltip showOpenButton showDeleteButton />
+              <AppointmentForm
+                basicLayoutComponent={BasicLayout}
+                textEditorComponent={TextEditor}
+                booleanEditorComponent={BooleanEditor}
+                labelComponent={Label}
+                messages={messages}
+              />
+            </Scheduler>
+          </Paper>
       </>
     );
   }
 }
 
-const Section = styled.section`
-  margin-left: 18vw;
-  padding: 2rem;
-  height: 100%;
-  .grid {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 1rem;
-    margin-top: 2rem;
-    .row__one {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      height: 50%;
-      gap: 1rem;
-    }
-    .row__two {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      height: 50%;
-    }
-  }
-  @media screen and (min-width: 280px) and (max-width: 1080px) {
-    margin-left: 0;
-    .grid {
-      .row__one,
-      .row__two {
-        grid-template-columns: 1fr;
-      }
-    }
-  }
-`;
+// const Section = styled.section`
+//   margin-left: 18vw;
+//   padding: 2rem;
+//   height: 100%;
+//   .grid {
+//     display: flex;
+//     flex-direction: column;
+//     height: 100%;
+//     gap: 1rem;
+//     margin-top: 2rem;
+//     .row__one {
+//       display: grid;
+//       grid-template-columns: repeat(2, 1fr);
+//       height: 50%;
+//       gap: 1rem;
+//     }
+//     .row__two {
+//       display: grid;
+//       grid-template-columns: repeat(3, 1fr);
+//       gap: 1rem;
+//       height: 50%;
+//     }
+//   }
+//   @media screen and (min-width: 280px) and (max-width: 1080px) {
+//     margin-left: 0;
+//     .grid {
+//       .row__one,
+//       .row__two {
+//         grid-template-columns: 1fr;
+//       }
+//     }
+//   }
+// `;

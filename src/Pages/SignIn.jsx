@@ -76,7 +76,7 @@ export default function SignIn() {
         await axios
           .post(`http://localhost:8000/user/login`, userData)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.status == 200 && res.data.success == true) {
               // isSuccess = true;
               localStorage.setItem("username", res.data.sub.firstName);
@@ -87,10 +87,11 @@ export default function SignIn() {
               window.alert(res.data.message);
               history.push("/home");
             } else {
-              console.log(res.data.message);
+              window.alert(res.data.message)
+              // console.log(res.data.message);
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => window.alert(`${err.response.data.message}`));
       }
       // if (!isSuccess) {
       //   await axios

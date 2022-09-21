@@ -20,7 +20,7 @@ export default function Sidebar() {
   html.addEventListener("click", () => setNavbarState(false));
   function handleLogout() {
     localStorage.clear();
-    history.push("/");
+    window.location.href = "/";
   }
   return (
     <>

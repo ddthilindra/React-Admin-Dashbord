@@ -10,6 +10,7 @@ import SingleEmp from "./Pages/SingleEmp";
 import LoginPage from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
+import Calender from "./Pages/Calender";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path="/" exact component={SignIn} />
           <Route path="/home" exact component={Dashboard} />
           {/* <Route path="/login" exact component={SignUp} /> */}
-          <Route path="/leave" component={LeaveSummery} />
+          <Route path="/leave" component={Calender} />
           <Route path="/employee" component={Employee} />
           <Route path="/employees/emp/:id" exact component={SingleEmp} />
           {/* <Route path="/em" component={SingleEmp} /> */}

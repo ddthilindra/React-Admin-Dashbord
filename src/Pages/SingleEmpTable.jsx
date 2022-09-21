@@ -25,7 +25,7 @@ const Employee = (props) => {
         
       )
       .then((res) => {
-        console.log("Getting from:", res.data.data);
+        // console.log("Getting from:", res.data.data);
         if (
           res.data.code === 200 &&
           res.data.success === true &&
@@ -33,11 +33,11 @@ const Employee = (props) => {
         ) {
           setRows(JSON.parse(JSON.stringify(res.data.data)));
         } else {
-          console.log("bad request...");
+          window.alert(res.data.message)
         }
         // setRows(res.data.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => window.alert(`${err.response.data.message}`));
   }, []);
 
   const history = useHistory();

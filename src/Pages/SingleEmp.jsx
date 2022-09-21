@@ -53,7 +53,7 @@ import Sidebar from "../components/Sidebar";
 const SingleEmp = () => {
   const history = useHistory();
   const { id } = useParams();
-  console.log("id is:", id);
+  // console.log("id is:", id);
   const [rows, setRows] = useState([]);
   const [userData, setuserData] = useState([]);
 
@@ -61,6 +61,12 @@ const SingleEmp = () => {
     if (!localStorage.getItem("isLoggedIn")) {
       history.push("/");
     }
+
+    const token=localStorage.getItem("token")
+
+    const config = {
+      headers: { Authorization: token },
+    };
     axios
       .get(`http://localhost:8000/user/getUserById/${id}`)
 
@@ -69,19 +75,19 @@ const SingleEmp = () => {
         setuserData(res.data.data[0]);
         // setuserData(JSON.parse(JSON.stringify(res.data.data)));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => window.alert(`${err.response.data.message}`));
     axios
       .get(`http://localhost:8000/leave/getAllHrsById/${id}`)
 
       .then((res) => {
-        console.log("Getting from:", res.data.data[0]);
+        // console.log("Getting from:", res.data.data[0]);
         //setRows(res.data.data[0]);
         setRows(JSON.parse(JSON.stringify(res.data.data)));
       })
       .catch((err) => console.log(err));
 
     axios
-      .get("http://localhost:8000/leave/getAllLeaves/1")
+      .get(`http://localhost:8000/leave/getAllLeavesById/${id}`,config)
       .then((res) => {
         if (
           res.data.code == 200 &&
@@ -91,10 +97,10 @@ const SingleEmp = () => {
           console.log(res.data);
           setdata(JSON.parse(JSON.stringify(res.data.data)));
         } else {
-          console.log("bad request...");
+          window.alert(res.data.message)
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => window.alert(`${err.response.data.message}`));
   }, []);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
