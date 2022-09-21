@@ -10,7 +10,7 @@ export default function Profile() {
         <img src={image} alt="" />
       </div>
       <div className="title">
-        <h2>Deshitha TH</h2>
+        <h2>{localStorage.getItem("username")}</h2>
         <h5>
           <HiOutlineLocationMarker /> MTR, Sri Lanka
         </h5>
